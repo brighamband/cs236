@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Token.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -10,7 +11,7 @@ int main(int argc, char *argv[])
     cout << "filename: " << filename << endl;
     ifstream in(argv[1]);
 
-    string firstVal = "";
+    string firstVal = "dd";
     string secondVal = "";
     string thirdVal = "";
     string fourthVal = "";
@@ -23,10 +24,21 @@ int main(int argc, char *argv[])
     cout << "thirdVal: " << thirdVal << endl;
     in >> fourthVal;
     cout << "fourthVal: " << fourthVal << endl;
-    if (!in)
-    {
-        cerr << "Reached end of file." << endl;
-    }
+
+    // string inputString = "";
+    // while (in)
+    // {
+    //     in >>
+    // }
+
+    // Token testToken("testing", "test", 1);
+    Token testToken(COMMA, "test", 1);
+    cout << testToken.toString();
+
+    // if (!in)
+    // {
+    //     cerr << "Reached end of file." << endl;
+    // }
 
     return 0;
 }
