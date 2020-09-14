@@ -8,6 +8,8 @@ class Lexer
 {
 public:
     Lexer() {}
+    // vector<Token>
+
     // 	Course() {
     // 		course = "Unspecified Course";
     // 	}

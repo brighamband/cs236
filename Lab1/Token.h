@@ -84,9 +84,8 @@ public:
             return "UNDEFINED";
         case END_OF_FILE:
             return "EOF";
-        default:
-            return "ERROR - FIXME";
         }
+        return "ERROR";
     }
     string toString() const
     {

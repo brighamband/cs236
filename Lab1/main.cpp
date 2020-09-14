@@ -31,8 +31,7 @@ int main(int argc, char *argv[])
     //     in >>
     // }
 
-    // Token testToken("testing", "test", 1);
-    Token testToken(COMMA, "test", 1);
+    Token testToken(END_OF_FILE, "test", 1);
     cout << testToken.toString();
 
     // if (!in)
