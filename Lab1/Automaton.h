@@ -1,7 +1,7 @@
 #ifndef AUTOMATON_H
 #define AUTOMATON_H
 
-// #include <string>
+#include <string>
 using namespace std;
 
 class Automaton
@@ -11,9 +11,9 @@ protected:
     TokenType type;
 
 public:
-    Automaton(TokenType type) { this->type = type; }
-    virtual int Read(const std::string &input) = 0;
-    virtual Token *CreateToken(std::string input, int lineNumber)
+    Automaton(TokenType tokenType) { type = tokenType; }
+    virtual int Read(const string &input) = 0;
+    virtual Token *CreateToken(string input, int lineNumber)
     {
         return new Token(type, input, lineNumber);
     }

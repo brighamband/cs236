@@ -1,14 +1,18 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-// #include <string>
+#include <string>
+#include <vector>
+#include "Token.h"
 using namespace std;
 
 class Lexer
 {
+private:
+    vector<Token> tokenVector;
+
 public:
     Lexer() {}
-    // vector<Token>
 
     // 	Course() {
     // 		course = "Unspecified Course";

@@ -1,35 +1,39 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Lexer.h"
 #include "Token.h"
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+    // Error checking for opening input file
 
-    string filename = argv[1];
-    cout << "filename: " << filename << endl;
+    if (argc < 2)
+    {
+        cerr << "Please provide the name of input file.";
+        return 1;
+    }
+
     ifstream in(argv[1]);
+    if (!in)
+    {
+        cerr << "Unable to open " << argv[1] << " for input";
+        return 1;
+    }
 
-    string firstVal = "dd";
-    string secondVal = "";
-    string thirdVal = "";
-    string fourthVal = "";
+    string line = "";
+    string inputString = "";
 
-    in >> firstVal;
-    cout << "firstVal: " << firstVal << endl;
-    in >> secondVal;
-    cout << "secondVal: " << secondVal << endl;
-    in >> thirdVal;
-    cout << "thirdVal: " << thirdVal << endl;
-    in >> fourthVal;
-    cout << "fourthVal: " << fourthVal << endl;
+    while (!in.eof())
+    {
+        getline(in, line);
+        inputString += line + "\n";
+    }
 
-    // string inputString = "";
-    // while (in)
-    // {
-    //     in >>
-    // }
+    Lexer lexer;
+
+    cout << "inputString: " << inputString << endl;
 
     Token testToken(END_OF_FILE, "test", 1);
     cout << testToken.toString();
