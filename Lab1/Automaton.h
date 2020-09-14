@@ -2,6 +2,7 @@
 #define AUTOMATON_H
 
 #include <string>
+#include "Token.h"
 using namespace std;
 
 class Automaton
@@ -12,12 +13,12 @@ protected:
 
 public:
     Automaton(TokenType tokenType) { type = tokenType; }
-    virtual int Read(const string &input) = 0;
-    virtual Token *CreateToken(string input, int lineNumber)
+    virtual int read(const string &input) = 0;
+    virtual Token *createToken(string input, int lineNumber)
     {
         return new Token(type, input, lineNumber);
     }
-    virtual int NewLinesRead() const { return newLines; }
+    virtual int newLinesRead() const { return newLines; }
 };
 
 #endif

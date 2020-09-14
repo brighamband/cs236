@@ -13,7 +13,7 @@ private:
 
 public:
     MatcherAutomaton(string toMatch, TokenType tokenType);
-    int Read(const string &input)
+    int read(const string &input)
     {
         bool isMatch = true;
         int inputRead = 0;

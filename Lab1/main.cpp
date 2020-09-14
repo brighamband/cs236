@@ -24,14 +24,13 @@ int main(int argc, char *argv[])
 
     string line = "";
     string inputString = "";
+    Lexer lexer;
 
     while (!in.eof())
     {
         getline(in, line);
         inputString += line + "\n";
     }
-
-    Lexer lexer;
 
     cout << "inputString: " << inputString << endl;
 
