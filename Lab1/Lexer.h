@@ -101,8 +101,7 @@ class Lexer {
         tokenVector.push_back(newToken);
     }
 
-    string
-    toString() const {
+    string toString() const {
         string tokensString = "";
         for (unsigned int i = 0; i < tokenVector.size(); i++) {
             tokensString += tokenVector.at(i).toString() + "\n";
