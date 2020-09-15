@@ -22,7 +22,6 @@ enum tokenType
     ID,
     STRING,
     COMMENT,
-    WHITESPACE,
     UNDEFINED,
     END_OF_FILE
 };
@@ -78,8 +77,6 @@ public:
             return "STRING";
         case COMMENT:
             return "COMMENT";
-        case WHITESPACE:
-            return "WHITESPACE";
         case UNDEFINED:
             return "UNDEFINED";
         case END_OF_FILE:
