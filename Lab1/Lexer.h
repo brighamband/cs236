@@ -26,10 +26,10 @@ class Lexer {
         automatonVector.push_back(new MatcherAutomaton(COLON_DASH, ":-"));
         automatonVector.push_back(new MatcherAutomaton(MULTIPLY, "*"));
         automatonVector.push_back(new MatcherAutomaton(ADD, "+"));
-        automatonVector.push_back(new MatcherAutomaton(SCHEMES, "SCHEMES"));
-        automatonVector.push_back(new MatcherAutomaton(FACTS, "FACTS"));
-        automatonVector.push_back(new MatcherAutomaton(RULES, "RULES"));
-        automatonVector.push_back(new MatcherAutomaton(QUERIES, "QUERIES"));
+        automatonVector.push_back(new MatcherAutomaton(SCHEMES, "Schemes"));
+        automatonVector.push_back(new MatcherAutomaton(FACTS, "Facts"));
+        automatonVector.push_back(new MatcherAutomaton(RULES, "Rules"));
+        automatonVector.push_back(new MatcherAutomaton(QUERIES, "Queries"));
 
         // FIXME - Below are custom automata
         /* automatonVector.push_back(new IDAutomaton(ID);
