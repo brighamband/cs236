@@ -13,7 +13,7 @@ class Lexer {
    private:
     vector<Automaton*> automatonVector;
     vector<Token> tokenVector;
-    int lineNumber = 0;  // what line you're on
+    int lineNumber = 1;  // what line you're on
 
    public:
     Lexer() {
@@ -49,8 +49,8 @@ class Lexer {
         int maxRead = 0;
         int inputRead = 0;
         int maxNewLines = 0;
-        lineNumber = 1;
         Automaton* maxMachine = automatonVector.at(0);
+        lineNumber = 1;
         Token newToken;
 
         /* TESTING */
@@ -64,7 +64,12 @@ class Lexer {
             maxRead = 0;
             maxNewLines = 0;
 
-            if (input.at(0) == ' ') {
+            // Remove any whitespace or new lines before
+            char firstChar = input.front();
+            if (isspace(firstChar)) {
+                if (firstChar == '\n') {
+                    lineNumber++;
+                }
                 input.erase(0, 1);
                 continue;
             }
@@ -84,12 +89,12 @@ class Lexer {
                 tokenVector.push_back(newToken);
             } else {  // No machine accepted the input, so it is invalid - HANDLES UNDEFINED
                 maxRead = 1;
-                newToken = Token(UNDEFINED, to_string(input.at(0)),
+                newToken = Token(UNDEFINED, input.substr(0, maxRead),
                                  lineNumber);
                 tokenVector.push_back(newToken);
             }
             // remove maxRead characters from input
-            input.erase(0, maxRead + 1);
+            input.erase(0, maxRead);
         }
         // make an EOF Token
         newToken = Token(END_OF_FILE, "", lineNumber);

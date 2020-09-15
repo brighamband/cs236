@@ -1,4 +1,3 @@
-#include <cctype>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -25,27 +24,15 @@ int main(int argc, char *argv[]) {
     string inputString = "";
     Lexer lexer;
 
-    while (!in.eof()) {
-        getline(in, line);
+    while (getline(in, line)) {
         inputString += line + "\n";
     }
 
     // Token testToken(END_OF_FILE, "test", 1);
     // cout << testToken.toString();
 
-    // cout << "inputString:"
-    //      << inputString << endl;
-
-    // while (!inputString.empty()) {
-    //     if (isspace(inputString.at(0))) {
-    //         inputString.erase(0, 1);
-    //         continue;
-    //     }
-    //     cout << "-";
-    //     inputString.erase(0, 3);
-
-    //     // inputString.erase(0, 1);
-    // }
+    cout << "inputString:" << endl
+         << inputString << endl;
 
     lexer.run(inputString);
     cout << lexer.toString();
