@@ -1,23 +1,21 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
+
 #include "Lexer.h"
 #include "Token.h"
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     // Error checking for opening input file
 
-    if (argc < 2)
-    {
+    if (argc < 2) {
         cerr << "Please provide the name of input file.";
         return 1;
     }
 
     ifstream in(argv[1]);
-    if (!in)
-    {
+    if (!in) {
         cerr << "Unable to open " << argv[1] << " for input";
         return 1;
     }
@@ -26,8 +24,7 @@ int main(int argc, char *argv[])
     string inputString = "";
     Lexer lexer;
 
-    while (!in.eof())
-    {
+    while (!in.eof()) {
         getline(in, line);
         inputString += line + "\n";
     }
