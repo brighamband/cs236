@@ -37,10 +37,8 @@ int main(int argc, char *argv[])
     Token testToken(END_OF_FILE, "test", 1);
     cout << testToken.toString();
 
-    // if (!in)
-    // {
-    //     cerr << "Reached end of file." << endl;
-    // }
+    // lexer.run();
+    // cout << lexer.toString();
 
     return 0;
 }

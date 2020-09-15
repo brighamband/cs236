@@ -9,16 +9,13 @@ class Automaton
 {
 protected:
     int newLines = 0;
-    TokenType type;
+    tokenType type;
 
 public:
-    Automaton(TokenType tokenType) { type = tokenType; }
+    Automaton(tokenType typeOfToken) { type = typeOfToken; }
     virtual int read(const string &input) = 0;
-    virtual Token *createToken(string input, int lineNumber)
-    {
-        return new Token(type, input, lineNumber);
-    }
-    virtual int newLinesRead() const { return newLines; }
+    virtual Token *createToken(string input, int lineNumber) = 0;
+    virtual int newLinesRead() const = 0;
 };
 
 #endif

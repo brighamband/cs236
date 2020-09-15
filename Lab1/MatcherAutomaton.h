@@ -9,10 +9,10 @@ using namespace std;
 class MatcherAutomaton : public Automaton
 {
 private:
-    std::string toMatch;
+    string toMatch;
 
 public:
-    MatcherAutomaton(string toMatch, TokenType tokenType);
+    MatcherAutomaton(tokenType typeOfToken, string toMatch);
     int read(const string &input)
     {
         bool isMatch = true;
@@ -30,6 +30,11 @@ public:
         }
         return inputRead;
     }
+    Token *createToken(string input, int lineNumber)
+    {
+        return new Token(type, input, lineNumber);
+    }
+    int newLinesRead() const { return newLines; }
 };
 
 #endif
