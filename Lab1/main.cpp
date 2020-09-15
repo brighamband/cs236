@@ -32,16 +32,13 @@ int main(int argc, char *argv[])
         inputString += line + "\n";
     }
 
-    // lexer.run();
-    // cout << lexer.toString();
+    // cout << "inputString: " << inputString << endl;
 
-    cout << "inputString: " << inputString << endl;
+    // Token testToken(END_OF_FILE, "test", 1);
+    // cout << testToken.toString();
 
-    Token testToken(END_OF_FILE, "test", 1);
-    cout << testToken.toString();
-
-    // lexer.run();
-    // cout << lexer.toString();
+    lexer.run(inputString);
+    cout << lexer.toString();
 
     return 0;
 }

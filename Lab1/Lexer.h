@@ -42,8 +42,8 @@ public:
     }
     void run(string input)
     {
-        // tokenVector.push_back(Token(COMMA, "test", 4));
-        // tokenVector.push_back(Token(LEFT_PAREN, "test2", 6));
+        tokenVector.push_back(Token(COMMA, "test", 4));
+        tokenVector.push_back(Token(LEFT_PAREN, "test2", 6));
         // NOTE: Lexer class needs a collection of machines and
         // an ordered collection to store the tokens generated
         // lineNumber = 1;
@@ -79,7 +79,7 @@ public:
         string tokensString = "";
         for (unsigned int i = 0; i < tokenVector.size(); i++)
         {
-            tokensString += tokensString + tokenVector.at(i).toString();
+            tokensString += tokensString + tokenVector.at(i).toString() + "\n";
         };
         return tokensString;
     }
