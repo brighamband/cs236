@@ -12,7 +12,8 @@ class MatcherAutomaton : public Automaton {
     string toMatch;
 
    public:
-    MatcherAutomaton(tokenType typeOfToken, string stringToMatch) : Automaton(typeOfToken) {
+    MatcherAutomaton(tokenType typeOfToken, string stringToMatch)
+        : Automaton(typeOfToken) {
         toMatch = stringToMatch;
     }
     int read(const string &input) {
@@ -28,8 +29,8 @@ class MatcherAutomaton : public Automaton {
         }
         return inputRead;
     }
-    Token *createToken(string input, int lineNumber) {
-        return new Token(type, input, lineNumber);
+    Token createToken(string input, int lineNumber) {
+        return Token(type, input, lineNumber);
     }
     int newLinesRead() const { return newLines; }
 };

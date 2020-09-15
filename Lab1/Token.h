@@ -80,7 +80,7 @@ class Token {
         return "ERROR";
     }
     string toString() const {
-        return ("(" + typeToString(type) + "," + value + "," + to_string(line) + ")");
+        return ("(" + typeToString(type) + ",\"" + value + "\"," + to_string(line) + ")");
     }
 };
 

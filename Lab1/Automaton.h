@@ -14,7 +14,7 @@ class Automaton {
    public:
     Automaton(tokenType typeOfToken) { type = typeOfToken; }
     virtual int read(const string &input) = 0;
-    virtual Token *createToken(string input, int lineNumber) = 0;
+    virtual Token createToken(string input, int lineNumber) = 0;
     virtual int newLinesRead() const = 0;
 };
 
