@@ -44,9 +44,37 @@ public:
     {
         tokenVector.push_back(Token(COMMA, "test", 4));
         tokenVector.push_back(Token(LEFT_PAREN, "test2", 6));
-        // NOTE: Lexer class needs a collection of machines and
-        // an ordered collection to store the tokens generated
+
         // lineNumber = 1;
+        // Token newToken;
+
+        // for (unsigned int i = 0; i < input.size(); i++)
+        // {
+        //     int maxRead = 0;
+        //     int maxNewLines = 0 // FIXME - do we need this?
+        //         // FIXME below - what type should this be?  Should there be a *?
+        //         Automaton maxMachine = automatonVector.at(0);
+
+        //     // foreach
+        //     //     machine in machines
+        //     //     {
+        //     for (unsigned int i = 0; i < automatonVector.size(); i++)
+        //     {
+        //         // FIXME - might need arrows instead of dot
+        //         int inputRead = automatonVector.at(i)->read(input);
+        //         if (inputRead > maxRead)
+        //         {
+        //             maxRead = inputRead;
+        //             maxMachine = automatonVector.at(i);
+        //             maxNewLines = automatonVector.at(i)->newLinesRead();
+        //         }
+        //     }
+        //     if (maxRead > 0)
+        //     {
+        //         newToken = maxMachine.createToken();
+        //         lineNumber +=
+        //     }
+        // }
         // while
         // set lineNumber to 1 looop on input.size() > 0
         // {
@@ -79,7 +107,7 @@ public:
         string tokensString = "";
         for (unsigned int i = 0; i < tokenVector.size(); i++)
         {
-            tokensString += tokensString + tokenVector.at(i).toString() + "\n";
+            tokensString += tokenVector.at(i).toString() + "\n";
         };
         return tokensString;
     }
