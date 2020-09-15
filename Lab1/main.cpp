@@ -3,7 +3,6 @@
 #include <string>
 
 #include "Lexer.h"
-#include "Token.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -28,18 +27,8 @@ int main(int argc, char *argv[]) {
         inputString += line + "\n";
     }
 
-    // Token testToken(END_OF_FILE, "test", 1);
-    // cout << testToken.toString();
-
-    cout << "inputString:" << endl
-         << inputString << endl;
-
     lexer.run(inputString);
     cout << lexer.toString();
-
-    // cout << endl
-    //      << "inputString:"
-    //      << inputString << endl;
 
     return 0;
 }

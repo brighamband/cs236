@@ -37,10 +37,6 @@ class Lexer {
     automatonVector.push_back(new CommentAutomaton(COMMENT); */
     }
     ~Lexer() {
-        // for (unsigned int i = 0; i < automatonVector.size(); i++) {
-        //     delete automatonVector.at(i);
-        // }
-
         // for (const auto& machine : automatonVector) {
         //     delete machine;
         // }
@@ -52,13 +48,6 @@ class Lexer {
         Automaton* maxMachine = automatonVector.at(0);
         lineNumber = 1;
         Token newToken;
-
-        /* TESTING */
-        // newToken = Token(COMMA, "test", 4);
-        // tokenVector.push_back(newToken);
-        // newToken = Token(LEFT_PAREN, "test2", 6);
-        // tokenVector.push_back(newToken);
-        /* DONE TESTING */
 
         while (!input.empty()) {
             maxRead = 0;
@@ -87,13 +76,13 @@ class Lexer {
                 newToken = maxMachine->createToken(input.substr(0, maxRead), lineNumber);
                 lineNumber += maxNewLines;
                 tokenVector.push_back(newToken);
-            } else {  // No machine accepted the input, so it is invalid - HANDLES UNDEFINED
+            } else {  // UNDEFINED case - No machine accepted the input (invalid)
                 maxRead = 1;
                 newToken = Token(UNDEFINED, input.substr(0, maxRead),
                                  lineNumber);
                 tokenVector.push_back(newToken);
             }
-            // remove maxRead characters from input
+            // remove characters from input that have already been processed
             input.erase(0, maxRead);
         }
         // make an EOF Token
@@ -106,6 +95,7 @@ class Lexer {
         for (unsigned int i = 0; i < tokenVector.size(); i++) {
             tokensString += tokenVector.at(i).toString() + "\n";
         };
+        tokensString += "Total Tokens = " + to_string(tokenVector.size()) + "\n";
         return tokensString;
     }
 };
