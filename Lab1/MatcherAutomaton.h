@@ -12,7 +12,10 @@ private:
     string toMatch;
 
 public:
-    MatcherAutomaton(tokenType typeOfToken, string toMatch);
+    MatcherAutomaton(tokenType typeOfToken, string stringToMatch) : Automaton(typeOfToken)
+    {
+        toMatch = stringToMatch;
+    }
     int read(const string &input)
     {
         bool isMatch = true;

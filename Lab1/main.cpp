@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
         inputString += line + "\n";
     }
 
+    // lexer.run();
+    // cout << lexer.toString();
+
     cout << "inputString: " << inputString << endl;
 
     Token testToken(END_OF_FILE, "test", 1);

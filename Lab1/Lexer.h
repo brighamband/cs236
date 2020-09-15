@@ -12,24 +12,24 @@ class Lexer
 private:
     vector<Automaton *> automatonVector;
     vector<Token> tokenVector;
-    // int lineNumber = 0;
+    int lineNumber = 0; // what line you're on
 
 public:
     Lexer()
     {
-        // automatonVector.push_back(new MatcherAutomaton(COMMA, ","));
-        // automatonVector.push_back(new MatcherAutomaton(PERIOD, "."));
-        // automatonVector.push_back(new MatcherAutomaton(Q_MARK, "?"));
-        // automatonVector.push_back(new MatcherAutomaton(LEFT_PAREN, "("));
-        // automatonVector.push_back(new MatcherAutomaton(RIGHT_PAREN, ")"));
-        // automatonVector.push_back(new MatcherAutomaton(COLON, ":"));
-        // automatonVector.push_back(new MatcherAutomaton(COLON_DASH, ":-"));
-        // automatonVector.push_back(new MatcherAutomaton(MULTIPLY, "*"));
-        // automatonVector.push_back(new MatcherAutomaton(ADD, "+"));
-        // automatonVector.push_back(new MatcherAutomaton(SCHEMES, "SCHEMES"));
-        // automatonVector.push_back(new MatcherAutomaton(FACTS, "FACTS"));
-        // automatonVector.push_back(new MatcherAutomaton(RULES, "RULES"));
-        // automatonVector.push_back(new MatcherAutomaton(QUERIES, "QUERIES"));
+        automatonVector.push_back(new MatcherAutomaton(COMMA, ","));
+        automatonVector.push_back(new MatcherAutomaton(PERIOD, "."));
+        automatonVector.push_back(new MatcherAutomaton(Q_MARK, "?"));
+        automatonVector.push_back(new MatcherAutomaton(LEFT_PAREN, "("));
+        automatonVector.push_back(new MatcherAutomaton(RIGHT_PAREN, ")"));
+        automatonVector.push_back(new MatcherAutomaton(COLON, ":"));
+        automatonVector.push_back(new MatcherAutomaton(COLON_DASH, ":-"));
+        automatonVector.push_back(new MatcherAutomaton(MULTIPLY, "*"));
+        automatonVector.push_back(new MatcherAutomaton(ADD, "+"));
+        automatonVector.push_back(new MatcherAutomaton(SCHEMES, "SCHEMES"));
+        automatonVector.push_back(new MatcherAutomaton(FACTS, "FACTS"));
+        automatonVector.push_back(new MatcherAutomaton(RULES, "RULES"));
+        automatonVector.push_back(new MatcherAutomaton(QUERIES, "QUERIES"));
 
         // FIXME - Below are custom automata
         /* automatonVector.push_back(new IDAutomaton(ID,
@@ -42,6 +42,8 @@ public:
     }
     void run(string input)
     {
+        // tokenVector.push_back(Token(COMMA, "test", 4));
+        // tokenVector.push_back(Token(LEFT_PAREN, "test2", 6));
         // NOTE: Lexer class needs a collection of machines and
         // an ordered collection to store the tokens generated
         // lineNumber = 1;
@@ -72,10 +74,15 @@ public:
         //     remove maxRead characters from input
         // }
     }
-    // string toString() const
-    // {
-    //     for (unsigned int i = 0;)
-    // }
+    string toString() const
+    {
+        string tokensString = "";
+        for (unsigned int i = 0; i < tokenVector.size(); i++)
+        {
+            tokensString += tokensString + tokenVector.at(i).toString();
+        };
+        return tokensString;
+    }
 };
 
 #endif
