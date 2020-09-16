@@ -5,7 +5,6 @@
 #include <string>
 
 #include "Automaton.h"
-#include "Token.h"
 using namespace std;
 
 class IDAutomaton : public Automaton {
@@ -28,10 +27,6 @@ class IDAutomaton : public Automaton {
 
         return inputRead;
     }
-    Token createToken(string input, int lineNumber) {
-        return Token(type, input, lineNumber);
-    }
-    int newLinesRead() const { return newLines; }
 };
 
 #endif

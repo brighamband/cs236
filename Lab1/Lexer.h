@@ -40,9 +40,9 @@ class Lexer {
         automatonVector.push_back(new CommentAutomaton(COMMENT));
     }
     ~Lexer() {
-        // for (const auto& machine : automatonVector) {
-        //     delete machine;
-        // }
+        for (const auto& machine : automatonVector) {
+            delete machine;
+        }
     }
     void run(string input) {
         int maxRead = 0;

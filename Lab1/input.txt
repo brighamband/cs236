@@ -1,9 +1,7 @@
 
+Queries:
+   marriedTo ('Bea' , 'Zed')?
 
-# unterminated string
-
-'good string'
-
-'bad string
-
+Rules:
+   marriedTo( X,Y ) :- marriedTo(Y,X) .
 
