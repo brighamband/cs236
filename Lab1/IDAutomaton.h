@@ -1,6 +1,7 @@
 #ifndef IDAUTOMATON_H
 #define IDAUTOMATON_H
 
+#include <cctype>
 #include <string>
 
 #include "Automaton.h"
@@ -8,21 +9,23 @@
 using namespace std;
 
 class IDAutomaton : public Automaton {
-   private:
-    string toMatch;
-
    public:
+    IDAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
-        bool isMatch = true;
         int inputRead = 0;
-        for (int i = 0; i < (int)toMatch.size() && isMatch; i++) {
-            if (input[i] != toMatch[i]) {
-                isMatch = false;
+
+        if (isalpha(input.front())) {
+            inputRead++;
+            // start at second value
+            for (unsigned int i = 1; i < input.size(); i++) {
+                if (isalnum(input.at(i))) {
+                    inputRead++;
+                } else {
+                    break;
+                }
             }
         }
-        if (isMatch) {
-            inputRead = toMatch.size();
-        }
+
         return inputRead;
     }
     Token createToken(string input, int lineNumber) {

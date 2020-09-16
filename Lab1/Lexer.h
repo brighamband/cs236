@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "IDAutomaton.h"
 #include "MatcherAutomaton.h"
 #include "Token.h"
 using namespace std;
@@ -32,9 +33,9 @@ class Lexer {
         automatonVector.push_back(new MatcherAutomaton(QUERIES, "Queries"));
 
         // FIXME - Below are custom automata
-        /* automatonVector.push_back(new IDAutomaton(ID);
-    automatonVector.push_back(new StringAutomaton(STRING);
-    automatonVector.push_back(new CommentAutomaton(COMMENT); */
+        automatonVector.push_back(new IDAutomaton(ID));
+        // automatonVector.push_back(new StringAutomaton(STRING));
+        // automatonVector.push_back(new CommentAutomaton(COMMENT));
     }
     ~Lexer() {
         // for (const auto& machine : automatonVector) {
