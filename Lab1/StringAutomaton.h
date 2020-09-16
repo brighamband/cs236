@@ -10,21 +10,20 @@ class StringAutomaton : public Automaton {
    public:
     StringAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
-        bool accepted = false;
         int inputRead = 0;
 
-        if (input.front() == '\'') {
-            inputRead++;
-            // start from second value
-            for (unsigned int i = 1; i < input.size(); i++) {
-                if (input.at(i) == '\'') {
-                    accepted = !accepted;
-                }
-                inputRead++;
-            }
+        // if (input.front() == '\'') {
+        //     inputRead++;
+        //     // start from second value
+        //     for (unsigned int i = 1; i < input.size(); i++) {
+        //         if (input.at(i) == '\'') {
+        //             accepted = !accepted;
+        //         }
+        //         inputRead++;
+        //     }
 
-            // while () {}
-        }
+        //     // while () {}
+        // }
 
         // if (!accepted) {
         //     type = UNDEFINED;
