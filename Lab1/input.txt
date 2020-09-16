@@ -1,9 +1,9 @@
 
 
- identifiers that contain numbers
+# unterminated string
 
-bob
+'good string'
 
-joe42
+'bad string
 
 

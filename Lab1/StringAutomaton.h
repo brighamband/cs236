@@ -11,23 +11,31 @@ class StringAutomaton : public Automaton {
     StringAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
         int inputRead = 0;
+        bool terminated = false;
 
-        // if (input.front() == '\'') {
-        //     inputRead++;
-        //     // start from second value
-        //     for (unsigned int i = 1; i < input.size(); i++) {
-        //         if (input.at(i) == '\'') {
-        //             accepted = !accepted;
-        //         }
-        //         inputRead++;
-        //     }
+        if (input.front() == '\'') {
+            inputRead++;
 
-        //     // while () {}
-        // }
+            // start loop at 2nd value
+            for (unsigned int i = 1; i < input.size() && !terminated; i++) {
+                if (input.at(i) == '\'') {
+                    // If it's not an apostrophe, then string is done and terminated
+                    if (input.at(i + 1) != '\'') {
+                        terminated = true;
+                        // FIXME - ANY OTHER WAY TO DO THIS?
+                        type = STRING;
+                    }
+                } else if (input.at(i) == '\n') {
+                    newLines++;
+                }
+                inputRead++;
+            }
+        }
 
-        // if (!accepted) {
-        //     type = UNDEFINED;
-        // }
+        if (!terminated) {
+            type = UNDEFINED;
+        }
+
         return inputRead;
     }
 };
