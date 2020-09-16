@@ -1,7 +1,9 @@
 
 
-# non-dash after colon
+# unterminated string
 
-   :-
+'good string'
 
-   ::
+'bad string
+
+
