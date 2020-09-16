@@ -1,9 +1,6 @@
-
-
-# unterminated string
-
-'good string'
-
-'bad string
-
-
+Queries:
+IsInRoomAtDH('Snoopy',R,'M',H)
+#SchemesFactsRules<
+.
+#|comment >=
+wow|#

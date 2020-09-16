@@ -18,32 +18,37 @@ class CommentAutomaton : public Automaton {
         if (input.front() == '#') {
             inputRead++;
 
-            // If single comment
+            // CASE 1 - if single comment
             if (input.at(1) != '|') {
                 inputRead++;
 
-                while (currIndex < input.size()) {
-                    // Start looking at 3rd char
-                    if (input.at(currIndex) == '\n') {
-                        // return inputRead;
-                        break;
-                    }
+                // include rest of line
+                while ((currIndex < input.size()) && (input.at(currIndex) != '\n')) {
+                    // if (input.at(currIndex) == '\n') {
+                    //     // return inputRead;
+                    //     break;
+                    // }
                     inputRead++;
                     currIndex++;
                 }
             }
-            // If block comment
+            // CASE 2 - if block comment
             else {
                 inputRead++;
 
                 while ((currIndex < input.size()) && !invalid) {
                     if (input.at(currIndex) == '|') {
+                        inputRead++;
                         if (input.at(currIndex + 1) == '#') {
                             // acceptable block comment
                             inputRead++;
                         } else {
                             invalid = true;
                         }
+                        break;
+                    } else if (input.at(currIndex) == '\n') {
+                        newLines++;
+                        // inputRead--;
                     }
                     inputRead++;
                     currIndex++;

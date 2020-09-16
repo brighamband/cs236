@@ -63,7 +63,7 @@ class Lexer {
                     lineNumber++;
                 }
                 input.erase(0, 1);
-                continue;
+                continue;  // restart while loop, recheck for whitespace
             }
 
             for (const auto& machine : automatonVector) {
