@@ -36,7 +36,7 @@ class StringAutomaton : public Automaton {
                 if (input.at(inputRead) == '\n') {
                     newLines++;
                 }
-                // // CASE 4 - characters within string
+                // CASE 4 - characters within string
                 inputRead++;
             }
         }

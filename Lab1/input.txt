@@ -1,15 +1,2 @@
-'
-This
-string
-is
-spread
-across
-many
-lines.
-'
-
-
-separate
-IDs
-s
-Schemes 'is different thanscheme
+#|hellllllllllllllllllllllllllo
+whatup|#

@@ -14,50 +14,40 @@ class CommentAutomaton : public Automaton {
         type = COMMENT;
         newLines = 0;
         unsigned int inputRead = 0;
-        unsigned int currIndex = 0;
-        bool terminated = false;
 
         if (input.front() == '#') {
             inputRead++;
 
             // CASE 1 - if single comment
             if (input.at(1) != '|') {
-                currIndex = 1;  // start at 2nd value -- include rest of line (if not \n)
-                while (currIndex < input.size()) {
-                    if (input.at(currIndex) == '\n') {
-                        break;
+                while (inputRead < input.size()) {
+                    if (input.at(inputRead) == '\n') {
+                        return inputRead;
                     }
                     inputRead++;
-                    currIndex++;
                 }
             }
             // CASE 2 - if block comment
             else {
                 inputRead++;
 
-                currIndex = 2;  // start at 3rd value
-                while (currIndex < input.size()) {
-                    if (input.at(currIndex) == '\n') {
-                        newLines++;
-                        currIndex++;
-                        continue;
-                    }
-                    if (input.at(currIndex) == '|') {
-                        inputRead++;
-                        // block comment is valid (closed)
-                        if (input.at(currIndex + 1) == '#') {
-                            inputRead++;
-                            // inputRead += 2;
-                            terminated = true;
-                            break;
+                while (inputRead < input.size()) {
+                    if (input.at(inputRead) == '|') {
+                        // CASE 2A - valid block comment terminated
+                        if (input.at(inputRead + 1) == '#') {
+                            inputRead += 2;
+                            return inputRead;
                         }
                     }
+                    // CASE 2B - unterminated block comment
+                    if ((inputRead + 1) == input.size()) {
+                        type = UNDEFINED;
+                    }
+                    if (input.at(inputRead) == '\n') {
+                        newLines++;
+                    }
+                    // CASE 2C - characters within block comment
                     inputRead++;
-                    currIndex++;
-                }
-
-                if (!terminated) {
-                    type = UNDEFINED;
                 }
             }
         }
