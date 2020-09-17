@@ -18,7 +18,7 @@ class CommentAutomaton : public Automaton {
         if (input.front() == '#') {
             inputRead++;
 
-            // CASE 1 - if single comment
+            // CASE 1 - single comment
             if (input.at(1) != '|') {
                 while (inputRead < input.size()) {
                     if (input.at(inputRead) == '\n') {
@@ -27,7 +27,7 @@ class CommentAutomaton : public Automaton {
                     inputRead++;
                 }
             }
-            // CASE 2 - if block comment
+            // CASE 2 - block comment
             else {
                 inputRead++;
 
@@ -51,7 +51,7 @@ class CommentAutomaton : public Automaton {
                 }
             }
         }
-
+        // CASE 3 - empty comment
         return inputRead;
     }
 };
