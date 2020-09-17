@@ -12,21 +12,19 @@ class IDAutomaton : public Automaton {
     IDAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
         int inputRead = 0;
-        bool terminated = false;
+        unsigned int currIndex = 0;
 
         if (isalpha(input.front())) {
             inputRead++;
 
-            // start at second value
-            unsigned int currIndex = 1;
+            currIndex = 1;  // start at second value
 
-            while ((currIndex < input.size()) && !terminated) {
-                if (isalnum(input.at(currIndex))) {
-                    inputRead++;
-                    currIndex++;
-                } else {
-                    terminated = true;
+            while (currIndex < input.size()) {
+                if (!isalnum(input.at(currIndex))) {
+                    break;
                 }
+                inputRead++;
+                currIndex++;
             }
         }
 
