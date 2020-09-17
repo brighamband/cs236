@@ -11,19 +11,20 @@ class CommentAutomaton : public Automaton {
    public:
     CommentAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
-        int inputRead = 0;
+        unsigned int inputRead = 0;
+        unsigned int currIndex = 0;
         bool terminated = false;
-        unsigned int currIndex = 2;  // Start at 3rd value
 
         if (input.front() == '#') {
             inputRead++;
 
             // CASE 1 - if single comment
             if (input.at(1) != '|') {
-                inputRead++;
-
-                // include rest of line
-                while ((currIndex < input.size()) && (input.at(currIndex) != '\n')) {
+                currIndex = 1;  // start at 2nd value -- include rest of line (if not \n)
+                while (currIndex < input.size()) {
+                    if (input.at(currIndex) == '\n') {
+                        break;
+                    }
                     inputRead++;
                     currIndex++;
                 }
@@ -32,15 +33,19 @@ class CommentAutomaton : public Automaton {
             else {
                 inputRead++;
 
-                while ((currIndex < input.size())) {
+                currIndex = 2;  // start at 3rd value
+                while (currIndex < input.size()) {
                     if (input.at(currIndex) == '\n') {
                         newLines++;
+                        currIndex++;
+                        continue;
                     }
                     if (input.at(currIndex) == '|') {
                         inputRead++;
                         // block comment is valid (closed)
                         if (input.at(currIndex + 1) == '#') {
                             inputRead++;
+                            // inputRead += 2;
                             terminated = true;
                             break;
                         }

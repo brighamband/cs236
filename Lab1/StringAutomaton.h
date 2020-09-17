@@ -10,36 +10,35 @@ class StringAutomaton : public Automaton {
    public:
     StringAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
-        int inputRead = 0;
-        unsigned currIndex = 1;  // start loop at 2nd value
+        unsigned int inputRead = 0;
+        // unsigned currIndex = 1;  // start loop at 2nd value
         bool terminated = false;
+        char singleQuote = '\'';
 
-        if (input.front() == '\'') {
+        if (input.front() == singleQuote) {
             inputRead++;
 
-            while (currIndex < input.size()) {
-                // CASE 1 - new line
-                if (input.at(currIndex) == '\n') {
-                    newLines++;
-                }
-                // CASE 2 - apostrophe
-                else if (input.at(currIndex) == '\'' && input.at(currIndex + 1) == '\'') {
-                    inputRead += 2;
-                    currIndex += 2;
-                }
-                // CASE 3 - valid string terminated
-                else if (input.at(currIndex) == '\'') {
-                    if ((currIndex + 1) == input.size() || input.at(currIndex + 1) != '\'') {
+            while (inputRead < input.size()) {
+                if (input.at(inputRead) == singleQuote) {
+                    // CASE 1 - valid string terminated (next is end of file or anything but a single quote)
+                    if ((inputRead + 1) == input.size() || input.at(inputRead + 1) != singleQuote) {
                         inputRead++;
                         terminated = true;
                         break;
                     }
+                    // CASE 2 - apostrophe
+                    if (input.at(inputRead + 1) == singleQuote) {
+                        inputRead += 2;
+                        continue;
+                    }
                 }
-                // CASE 4 - characters within string
-                else {
-                    inputRead++;
-                    currIndex++;
+
+                // CASE 3 - new line
+                if (input.at(inputRead) == '\n') {
+                    newLines++;
                 }
+                // // CASE 4 - characters within string
+                inputRead++;
             }
         }
 

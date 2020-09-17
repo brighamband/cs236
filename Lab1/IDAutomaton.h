@@ -11,7 +11,7 @@ class IDAutomaton : public Automaton {
    public:
     IDAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
-        int inputRead = 0;
+        unsigned int inputRead = 0;
         unsigned int currIndex = 0;
 
         if (isalpha(input.front())) {

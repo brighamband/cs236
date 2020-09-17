@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
     string line = "";
     string inputString = "";
-    char inputChar = ' ';
+    char inputChar = '\0';
     Lexer lexer;
 
     while (in.get(inputChar)) {
