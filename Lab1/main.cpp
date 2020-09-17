@@ -6,8 +6,6 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    // Error checking for opening input file
-
     if (argc < 2) {
         cerr << "Please provide the name of input file.";
         return 1;
