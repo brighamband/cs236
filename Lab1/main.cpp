@@ -19,10 +19,11 @@ int main(int argc, char *argv[]) {
 
     string line = "";
     string inputString = "";
+    char inputChar = ' ';
     Lexer lexer;
 
-    while (getline(in, line)) {
-        inputString += line + "\n";
+    while (in.get(inputChar)) {
+        inputString += inputChar;
     }
 
     lexer.run(inputString);
