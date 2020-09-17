@@ -12,7 +12,7 @@ class CommentAutomaton : public Automaton {
     CommentAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
         int inputRead = 0;
-        bool invalid = false;
+        bool terminated = false;
         unsigned int currIndex = 2;  // Start at 3rd value
 
         if (input.front() == '#') {
@@ -24,10 +24,6 @@ class CommentAutomaton : public Automaton {
 
                 // include rest of line
                 while ((currIndex < input.size()) && (input.at(currIndex) != '\n')) {
-                    // if (input.at(currIndex) == '\n') {
-                    //     // return inputRead;
-                    //     break;
-                    // }
                     inputRead++;
                     currIndex++;
                 }
@@ -36,28 +32,27 @@ class CommentAutomaton : public Automaton {
             else {
                 inputRead++;
 
-                while ((currIndex < input.size()) && !invalid) {
+                while ((currIndex < input.size())) {
+                    if (input.at(currIndex) == '\n') {
+                        newLines++;
+                    }
                     if (input.at(currIndex) == '|') {
                         inputRead++;
+                        // block comment is valid (closed)
                         if (input.at(currIndex + 1) == '#') {
-                            // acceptable block comment
                             inputRead++;
-                        } else {
-                            invalid = true;
+                            terminated = true;
+                            break;
                         }
-                        break;
-                    } else if (input.at(currIndex) == '\n') {
-                        newLines++;
-                        // inputRead--;
                     }
                     inputRead++;
                     currIndex++;
                 }
-            }
-        }
 
-        if (invalid) {
-            type = UNDEFINED;
+                if (!terminated) {
+                    type = UNDEFINED;
+                }
+            }
         }
 
         return inputRead;
