@@ -17,15 +17,17 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // get input, add to string
     string line = "";
     string inputString = "";
     char inputChar = '\0';
-    Lexer lexer;
 
     while (in.get(inputChar)) {
         inputString += inputChar;
     }
 
+    // run lexer
+    Lexer lexer;
     lexer.run(inputString);
     cout << lexer.toString();
 

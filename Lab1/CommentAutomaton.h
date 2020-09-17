@@ -11,6 +11,8 @@ class CommentAutomaton : public Automaton {
    public:
     CommentAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
+        type = COMMENT;
+        newLines = 0;
         unsigned int inputRead = 0;
         unsigned int currIndex = 0;
         bool terminated = false;

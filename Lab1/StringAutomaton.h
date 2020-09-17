@@ -10,9 +10,9 @@ class StringAutomaton : public Automaton {
    public:
     StringAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
     int read(const string &input) {
+        type = STRING;
+        newLines = 0;
         unsigned int inputRead = 0;
-        // unsigned currIndex = 1;  // start loop at 2nd value
-        bool terminated = false;
         char singleQuote = '\'';
 
         if (input.front() == singleQuote) {
@@ -23,8 +23,7 @@ class StringAutomaton : public Automaton {
                     // CASE 1 - valid string terminated (next is end of file or anything but a single quote)
                     if ((inputRead + 1) == input.size() || input.at(inputRead + 1) != singleQuote) {
                         inputRead++;
-                        terminated = true;
-                        break;
+                        return inputRead;
                     }
                     // CASE 2 - apostrophe
                     if (input.at(inputRead + 1) == singleQuote) {
@@ -41,11 +40,8 @@ class StringAutomaton : public Automaton {
                 inputRead++;
             }
         }
-
-        if (!terminated) {
-            type = UNDEFINED;
-        }
-
+        // CASE 5 - unterminated string
+        type = UNDEFINED;
         return inputRead;
     }
 };
