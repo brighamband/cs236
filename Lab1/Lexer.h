@@ -16,7 +16,7 @@ class Lexer {
    private:
     vector<Automaton*> automatonVector;
     vector<Token> tokenVector;
-    int lineNumber = 1;  // what line you're on
+    int lineNumber = 1;
 
    public:
     Lexer() {
@@ -33,8 +33,7 @@ class Lexer {
         automatonVector.push_back(new MatcherAutomaton(FACTS, "Facts"));
         automatonVector.push_back(new MatcherAutomaton(RULES, "Rules"));
         automatonVector.push_back(new MatcherAutomaton(QUERIES, "Queries"));
-
-        // FIXME - Below are custom automata
+        // custom automata
         automatonVector.push_back(new IDAutomaton(ID));
         automatonVector.push_back(new StringAutomaton(STRING));
         automatonVector.push_back(new CommentAutomaton(COMMENT));
@@ -56,7 +55,7 @@ class Lexer {
             maxRead = 0;
             maxNewLines = 0;
 
-            // Remove any whitespace or new lines before
+            // remove any whitespace or new lines before
             char firstChar = input.front();
             if (isspace(firstChar)) {
                 if (firstChar == '\n') {
@@ -79,7 +78,7 @@ class Lexer {
                 newToken = maxMachine->createToken(input.substr(0, maxRead), lineNumber);
                 lineNumber += maxNewLines;
                 tokenVector.push_back(newToken);
-            } else {  // UNDEFINED case - No machine accepted the input (invalid)
+            } else {  // UNDEFINED case - no machine accepted the input
                 maxRead = 1;
                 newToken = Token(UNDEFINED, input.substr(0, maxRead),
                                  lineNumber);
@@ -88,7 +87,6 @@ class Lexer {
             // remove characters from input that have already been processed
             input.erase(0, maxRead);
         }
-        // make an EOF Token
         newToken = Token(END_OF_FILE, "", lineNumber);
         tokenVector.push_back(newToken);
     }
