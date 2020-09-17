@@ -8,7 +8,7 @@ using namespace std;
 
 class Automaton {
    protected:
-    int newLines = 0;  // how many lines did you see in the machine
+    int newLines = 0;
     tokenType type;
 
    public:
