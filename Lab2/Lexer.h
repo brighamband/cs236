@@ -77,7 +77,11 @@ class Lexer {
             if (maxRead > 0) {
                 newToken = maxMachine->createToken(input.substr(0, maxRead), lineNumber);
                 lineNumber += maxNewLines;
-                tokenVector.push_back(newToken);
+
+                // output all tokens but COMMENTS
+                if (newToken.getType() != COMMENT) {
+                    tokenVector.push_back(newToken);
+                }
             } else {  // UNDEFINED case - no machine accepted the input
                 maxRead = 1;
                 newToken = Token(UNDEFINED, input.substr(0, maxRead),
