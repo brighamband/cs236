@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Lexer.h"
+#include "Parser.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -28,8 +29,11 @@ int main(int argc, char *argv[]) {
 
     // run lexer
     Lexer lexer;
-    lexer.run(inputString);
-    cout << lexer.toString();
+    vector<Token> lexedTokens = lexer.run(inputString);
+
+    // run parser;
+    Parser parser(lexedTokens);
+    cout << parser.toString();
 
     return 0;
 }

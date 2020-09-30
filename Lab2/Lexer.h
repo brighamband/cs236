@@ -43,7 +43,7 @@ class Lexer {
             delete machine;
         }
     }
-    void run(string input) {
+    vector<Token> run(string input) {
         int maxRead = 0;
         int inputRead = 0;
         int maxNewLines = 0;
@@ -93,6 +93,7 @@ class Lexer {
         }
         newToken = Token(END_OF_FILE, "", lineNumber);
         tokenVector.push_back(newToken);
+        return tokenVector;
     }
 
     string toString() const {

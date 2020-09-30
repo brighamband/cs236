@@ -1,7 +1,6 @@
 #ifndef COMMENTAUTOMATON_H
 #define COMMENTAUTOMATON_H
 
-#include <cctype>
 #include <string>
 
 #include "Automaton.h"
