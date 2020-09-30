@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
 
     // run parser;
     Parser parser(lexerTokens);
-    cout << parser.toString();
+    parser.parse();
+    // cout << parser.toString();
 
     return 0;
 }

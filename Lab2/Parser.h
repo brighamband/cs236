@@ -33,17 +33,37 @@ class Parser {
         // automatonVector.push_back(new CommentAutomaton(COMMENT));
     }
     void parse() {
-        // FIXME
+        try {
+            parseDatalogProgram();
+        } catch (int errorNum) {
+            cerr << "Yikes!  Error " << errorNum << " occurred." << endl;
+            if (errorNum == 1) {
+                cerr << "You messed up in parseSch." << endl;
+            }
+        }
     }
-
+    void parseDatalogProgram() {
+        cout << "done parsing datalogProgram." << endl;
+        parseScheme();
+    }
+    void parseScheme() {
+        throw 1;
+        cout << "done parsing scheme." << endl;
+        parseHeadPredicate();
+    }
+    void parseHeadPredicate() {
+        parseIdList();
+    }
+    void parseIdList() {
+        cout << "end of parsing." << endl;
+    }
     string toString() const {
-        // FIXME
-        string tokensString = " Test Vector:\n";
+        string tokenStr = " Test Vector:\n";
         for (unsigned int i = 0; i < tokenVctr.size(); i++) {
-            tokensString += tokenVctr.at(i).toString() + "\n";
+            tokenStr += tokenVctr.at(i).toString() + "\n";
         };
-        tokensString += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
-        return tokensString;
+        tokenStr += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
+        return tokenStr;
     }
 };
 
