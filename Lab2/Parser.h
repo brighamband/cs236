@@ -9,12 +9,11 @@ using namespace std;
 
 class Parser {
    private:
-    // vector<Token> tokenVector;
-    vector<Token> testVctr;
+    vector<Token> tokenVctr;
 
    public:
-    Parser(vector<Token> vTkns) {
-        testVctr = vTkns;
+    Parser(vector<Token> lexerTokens) {
+        tokenVctr = lexerTokens;
         // automatonVector.push_back(new MatcherAutomaton(COMMA, ","));
         // automatonVector.push_back(new MatcherAutomaton(PERIOD, "."));
         // automatonVector.push_back(new MatcherAutomaton(Q_MARK, "?"));
@@ -40,10 +39,10 @@ class Parser {
     string toString() const {
         // FIXME
         string tokensString = " Test Vector:\n";
-        for (unsigned int i = 0; i < testVctr.size(); i++) {
-            tokensString += testVctr.at(i).toString() + "\n";
+        for (unsigned int i = 0; i < tokenVctr.size(); i++) {
+            tokensString += tokenVctr.at(i).toString() + "\n";
         };
-        tokensString += "Total Tokens = " + to_string(testVctr.size()) + "\n";
+        tokensString += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
         return tokensString;
     }
 };

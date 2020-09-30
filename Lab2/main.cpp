@@ -29,10 +29,10 @@ int main(int argc, char *argv[]) {
 
     // run lexer
     Lexer lexer;
-    vector<Token> lexedTokens = lexer.run(inputString);
+    vector<Token> lexerTokens = lexer.run(inputString);
 
     // run parser;
-    Parser parser(lexedTokens);
+    Parser parser(lexerTokens);
     cout << parser.toString();
 
     return 0;
