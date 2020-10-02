@@ -19,21 +19,19 @@ class Parser {
         tokenVctr.erase(tokenVctr.begin());
     }
     void match(tokenType expectedToken) {
-        tokenType currentToken = tokenVctr.front().getType();
+        Token currentToken = tokenVctr.front();
 
-        if (currentToken == expectedToken) {
+        if (currentToken.getType() == expectedToken) {
             advance();
         } else {
-            throw expectedToken;
+            throw currentToken;
         }
     }
     void parse() {
         try {
             parseDatalogProgram();
-        } catch (tokenType expectedToken) {
-            Token token;
-            tokenType badToken = tokenVctr.front().getType();
-            cerr << "Bad Token Error.\nExpected " << token.typeToString(expectedToken) << " but parsed " << token.typeToString(badToken) << ".\n";
+        } catch (Token badToken) {
+            cerr << "Failure!\n  " << badToken.toString() << "\n";
         }
     }
     void parseDatalogProgram() {
@@ -54,7 +52,6 @@ class Parser {
         parseQueryList();
         match(END_OF_FILE);
         cout << toString();
-        // cout << "done parsing datalogProgram." << endl;
         // parseScheme();
     }
     /* SECTION 1 */
