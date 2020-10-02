@@ -24,22 +24,35 @@ class Parser {
         if (currentToken == expectedToken) {
             advance();
         } else {
-            throw currentToken;
+            throw expectedToken;
         }
     }
     void parse() {
         try {
             parseDatalogProgram();
-        } catch (tokenType badToken) {
+        } catch (tokenType expectedToken) {
             Token token;
-            cerr << "Bad token: " << token.typeToString(badToken) << endl;
+            tokenType badToken = tokenVctr.front().getType();
+            cerr << "Bad Token Error.\nExpected " << token.typeToString(expectedToken) << " but parsed " << token.typeToString(badToken) << ".\n";
         }
     }
     void parseDatalogProgram() {
         // datalogProgram	->	SCHEMES COLON scheme schemeList FACTS COLON factList RULES COLON ruleList QUERIES COLON query queryList EOF
         match(SCHEMES);
         match(COLON);
+        parseScheme();
+        parseSchemeList();
+        match(FACTS);
         match(COLON);
+        parseFactList();
+        match(RULES);
+        match(COLON);
+        parseRuleList();
+        match(QUERIES);
+        match(COLON);
+        parseQuery();
+        parseQueryList();
+        match(END_OF_FILE);
         cout << toString();
         // cout << "done parsing datalogProgram." << endl;
         // parseScheme();
@@ -59,9 +72,7 @@ class Parser {
     }
     /* SECTION 2 */
     void parseScheme() {
-        throw 1;
-        cout << "done parsing scheme." << endl;
-        parseHeadPredicate();
+        // scheme   	-> 	ID LEFT_PAREN ID idList RIGHT_PAREN
     }
     void parseFact() {
         // fact    	->	ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
@@ -92,7 +103,6 @@ class Parser {
     }
     void parseIdList() {
         // idList  	-> 	COMMA ID idList | lambda
-        cout << "end of parsing." << endl;
     }
     /* SECTION 5 */
     void parseParameter() {
