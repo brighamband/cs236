@@ -31,15 +31,15 @@ class DatalogProgram {
         }
         dPStr += "Facts(" + factVctr.size() + "):\n";
         for (unsigned int i = 0; i < factVctr.size(); i++) {
-            dPStr += "  " + factVctr.at(i).toString() + "\n";
+            dPStr += "  " + factVctr.at(i).toString() + ".\n";
         }
         dPStr += "Rules(" + ruleVctr.size() + "):\n";
         for (unsigned int i = 0; i < ruleVctr.size(); i++) {
-            dPStr += "  " + ruleVctr.at(i).toString() + "\n";
+            dPStr += "  " + ruleVctr.at(i).toString() + ".\n";
         }
         dPStr += "Queries(" + queryVctr.size() + "):\n";
         for (unsigned int i = 0; i < queryVctr.size(); i++) {
-            dPStr += "  " + queryVctr.at(i).toString() + "\n";
+            dPStr += "  " + queryVctr.at(i).toString() + "?\n";
         }
         dPStr += "Domain -- FIXME\n";
         return dPStr;
