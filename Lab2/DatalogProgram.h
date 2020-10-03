@@ -14,8 +14,8 @@ class DatalogProgram {
    private:
     vector<Predicate> schemeVctr;
     vector<Predicate> factVctr;
-    vector<Predicate> queryVctr;
     vector<Rule> ruleVctr;
+    vector<Predicate> queryVctr;
 
    public:
     DatalogProgram() {}
@@ -24,12 +24,25 @@ class DatalogProgram {
     //     parameterList = listOfParameters;
     // }
     string toString() const {  // for all scheme predicates, call predicate to string
-        // string tokenStr = " Test Vector:\n";
-        // for (unsigned int i = 0; i < tokenVctr.size(); i++) {
-        //     tokenStr += tokenVctr.at(i).toString() + "\n";
-        // };
-        // tokenStr += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
-        // return tokenStr;
+        string dPStr = "";
+        dPStr += "Schemes(" + schemeVctr.size() + "):\n";
+        for (unsigned int i = 0; i < schemeVctr.size(); i++) {
+            dPStr += "  " + schemeVctr.at(i).toString() + "\n";
+        }
+        dPStr += "Facts(" + factVctr.size() + "):\n";
+        for (unsigned int i = 0; i < factVctr.size(); i++) {
+            dPStr += "  " + factVctr.at(i).toString() + "\n";
+        }
+        dPStr += "Rules(" + ruleVctr.size() + "):\n";
+        for (unsigned int i = 0; i < ruleVctr.size(); i++) {
+            dPStr += "  " + ruleVctr.at(i).toString() + "\n";
+        }
+        dPStr += "Queries(" + queryVctr.size() + "):\n";
+        for (unsigned int i = 0; i < queryVctr.size(); i++) {
+            dPStr += "  " + queryVctr.at(i).toString() + "\n";
+        }
+        dPStr += "Domain -- FIXME\n";
+        return dPStr;
     }
 };
 
