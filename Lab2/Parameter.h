@@ -2,4 +2,26 @@
 //     Expression
 //     PlainParameter
 
-string toString() const {}
+#ifndef PARAMETER_H
+#define PARAMETER_H
+
+#include <string>
+using namespace std;
+
+class Parameter {
+   private:
+    // string name;
+    // string parameterList;
+
+   public:
+    Parameter() {}
+    // Parameter(string predicateName, string listOfParameters) {
+    //     name = predicateName;
+    //     parameterList = listOfParameters;
+    // }
+    string toString() const {
+        return "FIXME";
+    }
+};
+
+#endif
