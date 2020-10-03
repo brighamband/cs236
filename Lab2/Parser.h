@@ -36,11 +36,14 @@ class Parser {
             throw currentToken;
         }
     }
-    void parse() {
+    bool parse() {
         try {
             parseDatalogProgram();
+            cout << "Success!\n";
+            return true;
         } catch (Token badToken) {
             cerr << "Failure!\n  " << badToken.toString() << "\n";
+            return false;
         }
     }
     void parseDatalogProgram() {
@@ -60,8 +63,6 @@ class Parser {
         parseQuery();
         parseQueryList();
         match(END_OF_FILE);
-        cout << "Success!\n";
-        cout << toString();  // FIXME
     }
     /* SECTION 1 */
     void parseSchemeList() {
@@ -202,14 +203,6 @@ class Parser {
         if (peek(MULTIPLY)) {
             match(MULTIPLY);
         }
-    }
-    string toString() const {
-        string tokenStr = " Test Vector:\n";
-        for (unsigned int i = 0; i < tokenVctr.size(); i++) {
-            tokenStr += tokenVctr.at(i).toString() + "\n";
-        };
-        tokenStr += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
-        return tokenStr;
     }
 };
 

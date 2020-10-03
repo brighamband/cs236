@@ -31,10 +31,13 @@ int main(int argc, char *argv[]) {
     Lexer lexer;
     vector<Token> lexerTokens = lexer.run(inputString);
 
-    // run parser;
+    // run parser (exit program if fails)
     Parser parser(lexerTokens);
-    parser.parse();
-    // cout << parser.toString();
+    if (!parser.parse()) {
+        return 0;
+    }
+
+    // DatalogProgam::toString();
 
     return 0;
 }
