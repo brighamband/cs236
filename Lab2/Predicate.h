@@ -22,7 +22,7 @@ class Predicate {
         parameterList = listOfParameters;
     }
     string toString() const {
-        return name + parameterList;
+        return name + "(" + parameterList + ")";
         // string tokenStr = " Test Vector:\n";
         // for (unsigned int i = 0; i < tokenVctr.size(); i++) {
         //     tokenStr += tokenVctr.at(i).toString() + "\n";
