@@ -24,15 +24,21 @@ class Rule {
     vector<Predicate> predicateList;
 
    public:
-    // Rule() {}
-    // Rule(string predicateName, string listOfParameters) {
-    //     name = predicateName;
-    //     parameterList = listOfParameters;
-    // }
+    Rule(Predicate headPred, vector<Predicate> listOfPredicates) {
+        headPredicate = headPred;
+        predicateList = listOfPredicates;
+    }
     string toString() const {
-        return "FIXME";
         string ruleStr = "";
-        // ruleStr +=
+        ruleStr += headPredicate.toString() + " :- ";
+        for (unsigned int i = 0; i < predicateList.size(); i++) {
+            if (i > 0) {
+                ruleStr += ",";
+            }
+            ruleStr += predicateList.at(i).toString();
+        };
+        ruleStr += ".";
+        return ruleStr;
     }
 };
 

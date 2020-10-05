@@ -33,7 +33,7 @@ class DatalogProgram {
         }
         dPStr += "Rules(" + ruleVctr.size() + "):\n";
         for (unsigned int i = 0; i < ruleVctr.size(); i++) {
-            dPStr += "  " + ruleVctr.at(i).toString() + ".\n";
+            dPStr += "  " + ruleVctr.at(i).toString() + "\n";
         }
         dPStr += "Queries(" + queryVctr.size() + "):\n";
         for (unsigned int i = 0; i < queryVctr.size(); i++) {

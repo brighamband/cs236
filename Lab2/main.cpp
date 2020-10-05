@@ -7,6 +7,7 @@
 #include "Parameter.h"
 #include "Parser.h"
 #include "Predicate.h"
+#include "Rule.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -40,16 +41,26 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    vector<Parameter> vctr;
-    Parameter p1("hello");
-    Parameter p2("guys");
-    Parameter p3("heyyo");
-    vctr.push_back(p1);
-    vctr.push_back(p2);
-    vctr.push_back(p3);
-    Predicate predicate("student", vctr);
-    cout << predicate.toString();
+    vector<Parameter> paramV;
+    Parameter param1("hello");
+    Parameter param2("guys");
+    Parameter param3("heyyo");
+    paramV.push_back(param1);
+    paramV.push_back(param2);
+    paramV.push_back(param3);
 
+    vector<Predicate> predV;
+    Predicate hp("head", paramV);
+    Predicate pred1("student1", paramV);
+    Predicate pred2("student2", paramV);
+
+    predV.push_back(hp);
+    predV.push_back(pred1);
+    predV.push_back(pred2);
+    Rule rule(hp, predV);
+    cout << rule.toString();
+
+    // FIXME LATER
     // cout << parser.toString();
     // cout << DatalogProgam::toString();
 

@@ -19,6 +19,7 @@ class Predicate {
     vector<Parameter> paramList;
 
    public:
+    Predicate() {}  // FIXME do I need this?
     Predicate(string predicateName, vector<Parameter> listOfParameters) {
         name = predicateName;
         paramList = listOfParameters;
