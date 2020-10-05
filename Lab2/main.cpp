@@ -2,9 +2,11 @@
 #include <iostream>
 #include <string>
 
-#include "Lexer.h"
-#include "Parser.h"
 // #include "DatalogProgram.h"
+#include "Lexer.h"
+#include "Parameter.h"
+#include "Parser.h"
+#include "Predicate.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -38,7 +40,18 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // DatalogProgam::toString();
+    vector<Parameter> vctr;
+    Parameter p1("hello");
+    Parameter p2("guys");
+    Parameter p3("heyyo");
+    vctr.push_back(p1);
+    vctr.push_back(p2);
+    vctr.push_back(p3);
+    Predicate predicate("student", vctr);
+    cout << predicate.toString();
+
+    // cout << parser.toString();
+    // cout << DatalogProgam::toString();
 
     return 0;
 }

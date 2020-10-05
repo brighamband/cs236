@@ -13,15 +13,18 @@
 #define RULE_H
 
 #include <string>
+#include <vector>
+
+#include "Predicate.h"
 using namespace std;
 
 class Rule {
    private:
-    // string name;
-    // string parameterList;
+    Predicate headPredicate;
+    vector<Predicate> predicateList;
 
    public:
-    Rule() {}
+    // Rule() {}
     // Rule(string predicateName, string listOfParameters) {
     //     name = predicateName;
     //     parameterList = listOfParameters;

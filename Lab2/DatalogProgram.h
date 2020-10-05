@@ -1,5 +1,3 @@
-// Data Members:
-
 #ifndef DATALOGPROGRAM_H
 #define DATALOGPROGRAM_H
 
@@ -18,7 +16,7 @@ class DatalogProgram {
     vector<Predicate> queryVctr;
 
    public:
-    DatalogProgram() {}
+    // DatalogProgram() {}
     // DatalogProgram(string predicateName, string listOfParameters) {
     //     name = predicateName;
     //     parameterList = listOfParameters;

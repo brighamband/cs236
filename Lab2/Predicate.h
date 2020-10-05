@@ -19,7 +19,6 @@ class Predicate {
     vector<Parameter> paramList;
 
    public:
-    Predicate() {}
     Predicate(string predicateName, vector<Parameter> listOfParameters) {
         name = predicateName;
         paramList = listOfParameters;
@@ -28,7 +27,7 @@ class Predicate {
         string predStr = "";
         predStr += name + "(";
         for (unsigned int i = 0; i < paramList.size(); i++) {
-            if (i > 1) {
+            if (i > 0) {
                 predStr += ",";
             }
             predStr += paramList.at(i).toString();

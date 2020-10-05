@@ -10,18 +10,14 @@ using namespace std;
 
 class Parameter {
    private:
-    // string name;
-    // string value;
+    string value;
 
    public:
-    Parameter() {}
-    // Parameter(string predicateName, string listOfParameters) {
-    //     name = predicateName;
-    //     parameterList = listOfParameters;
-    // }
+    Parameter(string predValue) {
+        value = predValue;
+    }
     string toString() const {
-        return "FIXME";
-        // string paramStr = "";
+        return value;
     }
 };
 
