@@ -11,7 +11,7 @@ using namespace std;
 class Parameter {
    private:
     // string name;
-    // string parameterList;
+    // string value;
 
    public:
     Parameter() {}
@@ -21,6 +21,7 @@ class Parameter {
     // }
     string toString() const {
         return "FIXME";
+        // string paramStr = "";
     }
 };
 

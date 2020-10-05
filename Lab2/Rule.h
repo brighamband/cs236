@@ -28,6 +28,8 @@ class Rule {
     // }
     string toString() const {
         return "FIXME";
+        string ruleStr = "";
+        // ruleStr +=
     }
 };
 

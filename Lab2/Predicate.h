@@ -8,27 +8,33 @@
 #define PREDICATE_H
 
 #include <string>
+#include <vector>
+
+#include "Parameter.h"
 using namespace std;
 
 class Predicate {
    private:
     string name;
-    string parameterList;  // FIXME - What is the right type?
+    vector<Parameter> paramList;
 
    public:
     Predicate() {}
-    Predicate(string predicateName, string listOfParameters) {
+    Predicate(string predicateName, vector<Parameter> listOfParameters) {
         name = predicateName;
-        parameterList = listOfParameters;
+        paramList = listOfParameters;
     }
     string toString() const {
-        return name + "(" + parameterList + ")";
-        // string tokenStr = " Test Vector:\n";
-        // for (unsigned int i = 0; i < tokenVctr.size(); i++) {
-        //     tokenStr += tokenVctr.at(i).toString() + "\n";
-        // };
-        // tokenStr += "Total Tokens = " + to_string(tokenVctr.size()) + "\n";
-        // return tokenStr;
+        string predStr = "";
+        predStr += name + "(";
+        for (unsigned int i = 0; i < paramList.size(); i++) {
+            if (i > 1) {
+                predStr += ",";
+            }
+            predStr += paramList.at(i).toString();
+        };
+        predStr += ")";
+        return predStr;
     }
 };
 
