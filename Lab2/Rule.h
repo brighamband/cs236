@@ -37,7 +37,6 @@ class Rule {
             }
             ruleStr += predicateList.at(i).toString();
         };
-        ruleStr += ".";
         return ruleStr;
     }
 };
