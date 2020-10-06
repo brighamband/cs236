@@ -39,6 +39,7 @@ class Token {
         line = lineOfToken;
     }
     tokenType getType() { return type; }
+    string getValue() { return value; }
     string typeToString(tokenType typeOfToken) const {
         switch (typeOfToken) {
             case COMMA:

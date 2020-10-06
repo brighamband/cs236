@@ -41,24 +41,24 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    vector<Parameter> paramV;
-    Parameter param1("hello");
-    Parameter param2("guys");
-    Parameter param3("heyyo");
-    paramV.push_back(param1);
-    paramV.push_back(param2);
-    paramV.push_back(param3);
+    // vector<Parameter> paramV;
+    // Parameter param1("hello");
+    // Parameter param2("guys");
+    // Parameter param3("heyyo");
+    // paramV.push_back(param1);
+    // paramV.push_back(param2);
+    // paramV.push_back(param3);
 
-    vector<Predicate> predV;
-    Predicate hp("head", paramV);
-    Predicate pred1("student1", paramV);
-    Predicate pred2("student2", paramV);
+    // vector<Predicate> predV;
+    // Predicate hp("head", paramV);
+    // Predicate pred1("student1", paramV);
+    // Predicate pred2("student2", paramV);
 
-    predV.push_back(hp);
-    predV.push_back(pred1);
-    predV.push_back(pred2);
-    Rule rule(hp, predV);
-    cout << rule.toString();
+    // predV.push_back(hp);
+    // predV.push_back(pred1);
+    // predV.push_back(pred2);
+    // Rule rule(hp, predV);
+    // cout << rule.toString();
 
     // FIXME LATER
     // cout << parser.toString();

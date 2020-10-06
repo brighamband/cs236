@@ -2,22 +2,28 @@
 #define PARSER_H
 
 #include <string>
-#include <vector>
+#include <vector>  // FIXME
 
+#include "DatalogProgram.h"
+#include "Predicate.h"  // FIXME
 #include "Token.h"
 using namespace std;
 
 class Parser {
    private:
     vector<Token> tokenVctr;
+    Token currentToken;
+    string tempPredName;
+    vector<Predicate> tempPredVctr;
+    vector<Parameter> tempParamVctr;
 
    public:
     Parser(vector<Token> lexerTokens) {
         tokenVctr = lexerTokens;
+        currentToken = tokenVctr.front();
     }
+    DatalogProgram datalog;
     bool peek(tokenType expectedToken) {
-        Token currentToken = tokenVctr.front();
-
         if (currentToken.getType() == expectedToken) {
             return true;
         } else {
@@ -26,10 +32,9 @@ class Parser {
     }
     void advance() {
         tokenVctr.erase(tokenVctr.begin());
+        currentToken = tokenVctr.front();
     }
     void match(tokenType expectedToken) {
-        Token currentToken = tokenVctr.front();
-
         if (currentToken.getType() == expectedToken) {
             advance();
         } else {
@@ -40,6 +45,7 @@ class Parser {
         try {
             parseDatalogProgram();
             cout << "Success!\n";
+            cout << datalog.toString();  // FIXME
             return true;
         } catch (Token badToken) {
             cerr << "Failure!\n  " << badToken.toString() << "\n";
@@ -96,20 +102,30 @@ class Parser {
     /* SECTION 2 */
     void parseScheme() {
         // scheme   	-> 	ID LEFT_PAREN ID idList RIGHT_PAREN
+        tempPredName = tokenVctr.front().getValue();
         match(ID);
         match(LEFT_PAREN);
+        tempParamVctr.push_back(currentToken.getValue());
         match(ID);
         parseIdList();
         match(RIGHT_PAREN);
+        Predicate predicate(tempPredName, tempParamVctr);
+        datalog.addScheme(predicate);
+        tempParamVctr.clear();
     }
     void parseFact() {
         // fact    	->	ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
+        tempPredName = tokenVctr.front().getValue();
         match(ID);
         match(LEFT_PAREN);
+        tempParamVctr.push_back(currentToken.getValue());
         match(STRING);
         parseStringList();
         match(RIGHT_PAREN);
         match(PERIOD);
+        Predicate predicate(tempPredName, tempParamVctr);
+        datalog.addFact(predicate);
+        tempParamVctr.clear();
     }
     void parseRule() {
         // rule    	->	headPredicate COLON_DASH predicate predicateList PERIOD
@@ -123,6 +139,9 @@ class Parser {
         // query	        ->      predicate Q_MARK
         parsePredicate();
         match(Q_MARK);
+        Predicate predicate(tempPredName, tempParamVctr);
+        datalog.addQuery(predicate);
+        tempParamVctr.clear();
     }
     /* SECTION 3 */
     void parseHeadPredicate() {
@@ -135,6 +154,7 @@ class Parser {
     }
     void parsePredicate() {
         // predicate	->	ID LEFT_PAREN parameter parameterList RIGHT_PAREN
+        tempPredName = tokenVctr.front().getValue();
         match(ID);
         match(LEFT_PAREN);
         parseParameter();
@@ -154,6 +174,7 @@ class Parser {
         // parameterList	-> 	COMMA parameter parameterList | lambda
         if (peek(COMMA)) {
             match(COMMA);
+            tempParamVctr.push_back(currentToken.getValue());
             parseParameter();
             parseParameterList();
         }
@@ -162,6 +183,7 @@ class Parser {
         // stringList	-> 	COMMA STRING stringList | lambda
         if (peek(COMMA)) {
             match(COMMA);
+            tempParamVctr.push_back(currentToken.getValue());
             match(STRING);
             parseStringList();
         }
@@ -170,6 +192,7 @@ class Parser {
         // idList  	-> 	COMMA ID idList | lambda
         if (peek(COMMA)) {
             match(COMMA);
+            tempParamVctr.push_back(currentToken.getValue());
             match(ID);
             parseIdList();
         }
@@ -178,12 +201,15 @@ class Parser {
     void parseParameter() {
         // parameter	->	STRING | ID | expression
         if (peek(STRING)) {
+            tempParamVctr.push_back(currentToken.getValue());
             match(STRING);
         }
         if (peek(ID)) {
+            tempParamVctr.push_back(currentToken.getValue());
             match(ID);
         }
         if (peek(LEFT_PAREN)) {
+            tempParamVctr.push_back(currentToken.getValue());
             parseExpression();
         }
     }

@@ -1,7 +1,3 @@
-// Maybe break down into 2 subclasses (this would become abstract):
-//     Expression
-//     PlainParameter
-
 #ifndef PARAMETER_H
 #define PARAMETER_H
 
