@@ -102,7 +102,7 @@ class Parser {
     /* SECTION 2 */
     void parseScheme() {
         // scheme   	-> 	ID LEFT_PAREN ID idList RIGHT_PAREN
-        tempPredName = tokenVctr.front().getValue();
+        tempPredName = currentToken.getValue();
         match(ID);
         match(LEFT_PAREN);
         tempParamVctr.push_back(currentToken.getValue());
@@ -115,7 +115,7 @@ class Parser {
     }
     void parseFact() {
         // fact    	->	ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
-        tempPredName = tokenVctr.front().getValue();
+        tempPredName = currentToken.getValue();
         match(ID);
         match(LEFT_PAREN);
         tempParamVctr.push_back(currentToken.getValue());
@@ -154,7 +154,7 @@ class Parser {
     /* SECTION 3 */
     void parseHeadPredicate() {
         // headPredicate	->	ID LEFT_PAREN ID idList RIGHT_PAREN
-        tempPredName = tokenVctr.front().getValue();
+        tempPredName = currentToken.getValue();
         match(ID);
         match(LEFT_PAREN);
         tempParamVctr.push_back(currentToken.getValue());
@@ -164,7 +164,7 @@ class Parser {
     }
     void parsePredicate() {
         // predicate	->	ID LEFT_PAREN parameter parameterList RIGHT_PAREN
-        tempPredName = tokenVctr.front().getValue();
+        tempPredName = currentToken.getValue();
         match(ID);
         match(LEFT_PAREN);
         parseParameter();
@@ -179,6 +179,7 @@ class Parser {
         if (peek(COMMA)) {
             match(COMMA);
             parsePredicate();
+            tempParamVctr.clear();
             parsePredicateList();
         }
     }
