@@ -16,13 +16,14 @@ class Parser {
     string tempPredName;
     vector<Predicate> tempPredVctr;
     vector<Parameter> tempParamVctr;
+    DatalogProgram datalog;
 
    public:
     Parser(vector<Token> lexerTokens) {
         tokenVctr = lexerTokens;
         currentToken = tokenVctr.front();
     }
-    DatalogProgram datalog;
+    // DatalogProgram datalog;
     bool peek(tokenType expectedToken) {
         if (currentToken.getType() == expectedToken) {
             return true;
