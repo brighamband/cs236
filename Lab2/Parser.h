@@ -61,9 +61,9 @@ class Parser {
         match(FACTS);
         match(COLON);
         parseFactList();
-        match(RULES);
-        match(COLON);
-        parseRuleList();
+        // match(RULES);
+        // match(COLON);
+        // parseRuleList();
         match(QUERIES);
         match(COLON);
         parseQuery();
@@ -174,7 +174,6 @@ class Parser {
         // parameterList	-> 	COMMA parameter parameterList | lambda
         if (peek(COMMA)) {
             match(COMMA);
-            tempParamVctr.push_back(currentToken.getValue());
             parseParameter();
             parseParameterList();
         }

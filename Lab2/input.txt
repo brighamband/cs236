@@ -20,10 +20,7 @@ student('G.W.Bush','53','12 Ashton', 'AgriSci').
 student('Clinton','54','', 'Lying').
   #student('Clinton','54','', 'Lying').
 
-  #Rules:
-Rules:
-  #WhoMajor(N,M):-student(N,I,A,M).
-WhoMajor(N,M):-student(N,I,A,M).
+ 
 
 Queries:
   #Queries:
