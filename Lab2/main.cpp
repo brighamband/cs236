@@ -37,8 +37,6 @@ int main(int argc, char *argv[]) {
     if (!parser.parse()) {
         return 0;
     }
-    // DatalogProgram datalog;
-    // cout << datalog.toString();
 
     return 0;
 }

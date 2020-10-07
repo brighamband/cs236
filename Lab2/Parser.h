@@ -46,7 +46,7 @@ class Parser {
         try {
             parseDatalogProgram();
             cout << "Success!\n";
-            cout << datalog.toString();  // FIXME
+            cout << datalog.toString();
             return true;
         } catch (Token badToken) {
             cerr << "Failure!\n  " << badToken.toString() << "\n";
