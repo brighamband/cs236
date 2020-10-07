@@ -61,9 +61,9 @@ class Parser {
         match(FACTS);
         match(COLON);
         parseFactList();
-        // match(RULES);
-        // match(COLON);
-        // parseRuleList();
+        match(RULES);
+        match(COLON);
+        parseRuleList();
         match(QUERIES);
         match(COLON);
         parseQuery();
@@ -130,10 +130,15 @@ class Parser {
     void parseRule() {
         // rule    	->	headPredicate COLON_DASH predicate predicateList PERIOD
         parseHeadPredicate();
+        Predicate tempHeadPred(tempPredName, tempParamVctr);
+        tempParamVctr.clear();
         match(COLON_DASH);
         parsePredicate();
         parsePredicateList();
         match(PERIOD);
+        Rule rule(tempHeadPred, tempPredVctr);
+        datalog.addRule(rule);
+        tempPredVctr.clear();
     }
     void parseQuery() {
         // query	        ->      predicate Q_MARK
@@ -146,8 +151,10 @@ class Parser {
     /* SECTION 3 */
     void parseHeadPredicate() {
         // headPredicate	->	ID LEFT_PAREN ID idList RIGHT_PAREN
+        tempPredName = tokenVctr.front().getValue();
         match(ID);
         match(LEFT_PAREN);
+        tempParamVctr.push_back(currentToken.getValue());
         match(ID);
         parseIdList();
         match(RIGHT_PAREN);
@@ -160,6 +167,9 @@ class Parser {
         parseParameter();
         parseParameterList();
         match(RIGHT_PAREN);
+        Predicate predicate(tempPredName, tempParamVctr);
+        tempPredVctr.push_back(predicate);
+        tempParamVctr.clear();
     }
     /* SECTION 4 */
     void parsePredicateList() {

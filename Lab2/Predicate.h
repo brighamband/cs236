@@ -18,6 +18,10 @@ class Predicate {
         name = predicateName;
         paramList = listOfParameters;
     }
+    void fillEmptyPredicate(string predicateName, vector<Parameter> listOfParameters) {
+        name = predicateName;
+        paramList = listOfParameters;
+    }
     string toString() const {
         string predStr = "";
         predStr += name + "(";
