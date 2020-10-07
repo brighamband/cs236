@@ -18,12 +18,6 @@ class Predicate {
         name = predicateName;
         paramList = listOfParameters;
     }
-    // void addName(string predicateName) {
-    //     name = predicateName;
-    // }
-    // void addParameter(string parameter) {
-    //     paramList.push_back(parameter);
-    // }
     string toString() const {
         string predStr = "";
         predStr += name + "(";

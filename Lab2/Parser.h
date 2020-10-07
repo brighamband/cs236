@@ -2,10 +2,10 @@
 #define PARSER_H
 
 #include <string>
-#include <vector>  // FIXME
+#include <vector>
 
 #include "DatalogProgram.h"
-#include "Predicate.h"  // FIXME
+#include "Predicate.h"
 #include "Token.h"
 using namespace std;
 

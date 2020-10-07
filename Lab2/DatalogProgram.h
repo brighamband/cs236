@@ -22,6 +22,9 @@ class DatalogProgram {
     void addFact(Predicate fact) {
         factsVctr.push_back(fact);
     }
+    void addRule(Rule rule) {
+        rulesVctr.push_back(rule);
+    }
     void addQuery(Predicate query) {
         queriesVctr.push_back(query);
     }
@@ -41,14 +44,14 @@ class DatalogProgram {
         }
         return factsStr;
     }
-    // string toStringRules() const {
-    //     string rulesStr = "";
-    //     rulesStr += "Rules(" + rulesVctr.size() + "):\n";
-    //     for (unsigned int i = 0; i < rulesVctr.size(); i++) {
-    //         rulesStr += "  " + rulesVctr.at(i).toString() + ".\n";
-    //     }
-    //     return rulesStr;
-    // }
+    string toStringRules() const {
+        string rulesStr = "";
+        rulesStr += "Rules(" + to_string(rulesVctr.size()) + "):\n";
+        for (unsigned int i = 0; i < rulesVctr.size(); i++) {
+            rulesStr += "  " + rulesVctr.at(i).toString() + ".\n";
+        }
+        return rulesStr;
+    }
     string toStringQueries() const {
         string queriesStr = "";
         queriesStr += "Queries(" + to_string(queriesVctr.size()) + "):\n";
@@ -62,7 +65,7 @@ class DatalogProgram {
     // }
     string toString() const {  // for all scheme predicates, call predicate to string
         string combinedStr = "";
-        combinedStr += toStringSchemes() + toStringFacts() + toStringQueries();
+        combinedStr += toStringSchemes() + toStringFacts() + toStringRules() + toStringQueries();
         // + facts + rules + queries +domain
         return combinedStr;
     }
