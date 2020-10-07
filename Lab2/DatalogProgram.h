@@ -69,7 +69,7 @@ class DatalogProgram {
         string domainStr = "";
         domainStr += "Domain(" + to_string(domainSet.size()) + "):\n";
         for (set<string>::iterator iter = domainSet.begin(); iter != domainSet.end(); ++iter) {
-            domainStr += "  " + *iter + "?\n";
+            domainStr += "  " + *iter + "\n";
         }
         return domainStr;
     }
