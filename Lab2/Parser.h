@@ -119,6 +119,7 @@ class Parser {
         match(ID);
         match(LEFT_PAREN);
         tempParamVctr.push_back(currentToken.getValue());
+        datalog.addDomain(currentToken.getValue());
         match(STRING);
         parseStringList();
         match(RIGHT_PAREN);
@@ -134,11 +135,13 @@ class Parser {
         tempParamVctr.clear();
         match(COLON_DASH);
         parsePredicate();
+        tempParamVctr.clear();
         parsePredicateList();
         match(PERIOD);
         Rule rule(tempHeadPred, tempPredVctr);
         datalog.addRule(rule);
         tempPredVctr.clear();
+        tempParamVctr.clear();
     }
     void parseQuery() {
         // query	        ->      predicate Q_MARK
@@ -169,7 +172,6 @@ class Parser {
         match(RIGHT_PAREN);
         Predicate predicate(tempPredName, tempParamVctr);
         tempPredVctr.push_back(predicate);
-        tempParamVctr.clear();
     }
     /* SECTION 4 */
     void parsePredicateList() {
@@ -193,6 +195,7 @@ class Parser {
         if (peek(COMMA)) {
             match(COMMA);
             tempParamVctr.push_back(currentToken.getValue());
+            datalog.addDomain(currentToken.getValue());
             match(STRING);
             parseStringList();
         }

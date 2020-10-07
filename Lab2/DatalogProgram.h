@@ -1,6 +1,7 @@
 #ifndef DATALOGPROGRAM_H
 #define DATALOGPROGRAM_H
 
+#include <set>
 #include <string>
 #include <vector>
 
@@ -14,6 +15,7 @@ class DatalogProgram {
     vector<Predicate> factsVctr;
     vector<Rule> rulesVctr;
     vector<Predicate> queriesVctr;
+    set<string> domainSet;
 
    public:
     void addScheme(Predicate scheme) {
@@ -27,6 +29,9 @@ class DatalogProgram {
     }
     void addQuery(Predicate query) {
         queriesVctr.push_back(query);
+    }
+    void addDomain(string domain) {
+        domainSet.insert(domain);
     }
     string toStringSchemes() const {
         string schemesStr = "";
@@ -60,13 +65,17 @@ class DatalogProgram {
         }
         return queriesStr;
     }
-    // string toStringDomain() const {
-    //     return "FIXME/n";
-    // }
-    string toString() const {  // for all scheme predicates, call predicate to string
+    string toStringDomain() const {
+        string domainStr = "";
+        domainStr += "Domain(" + to_string(domainSet.size()) + "):\n";
+        for (set<string>::iterator iter = domainSet.begin(); iter != domainSet.end(); ++iter) {
+            domainStr += "  " + *iter + "?\n";
+        }
+        return domainStr;
+    }
+    string toString() const {
         string combinedStr = "";
-        combinedStr += toStringSchemes() + toStringFacts() + toStringRules() + toStringQueries();
-        // + facts + rules + queries +domain
+        combinedStr += toStringSchemes() + toStringFacts() + toStringRules() + toStringQueries() + toStringDomain();
         return combinedStr;
     }
 };
