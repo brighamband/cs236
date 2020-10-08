@@ -9,8 +9,11 @@ class Parameter {
     string value;
 
    public:
-    Parameter(string predValue) {
-        value = predValue;
+    Parameter(string paramVal) {
+        value = paramVal;
+    }
+    void setValue(string paramVal) {
+        value = paramVal;
     }
     string toString() const {
         return value;

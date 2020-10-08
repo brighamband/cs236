@@ -168,7 +168,8 @@ class Parser {
         tempPredName = currentToken.getValue();
         match(ID);
         match(LEFT_PAREN);
-        parseParameter();
+        Parameter parameter = parseParameter();
+        tempParamVctr.push_back(parameter);
         parseParameterList();
         match(RIGHT_PAREN);
         Predicate predicate(tempPredName, tempParamVctr);
@@ -188,7 +189,8 @@ class Parser {
         // parameterList	-> 	COMMA parameter parameterList | lambda
         if (peek(COMMA)) {
             match(COMMA);
-            parseParameter();
+            Parameter parameter = parseParameter();
+            tempParamVctr.push_back(parameter);
             parseParameterList();
         }
     }
@@ -212,37 +214,45 @@ class Parser {
         }
     }
     /* SECTION 5 */
-    void parseParameter() {
+    Parameter parseParameter() {
         // parameter	->	STRING | ID | expression
+        Parameter paramStr(currentToken.getValue());
         if (peek(STRING)) {
-            tempParamVctr.push_back(currentToken.getValue());
             match(STRING);
         }
         if (peek(ID)) {
-            tempParamVctr.push_back(currentToken.getValue());
             match(ID);
         }
         if (peek(LEFT_PAREN)) {
-            tempParamVctr.push_back(currentToken.getValue());
-            parseExpression();
+            paramStr.setValue(parseExpression());
         }
+        return paramStr;
     }
-    void parseExpression() {
+
+    string parseExpression() {
         // expression	->	LEFT_PAREN parameter operator parameter RIGHT_PAREN
+        string expStr = currentToken.getValue();
         match(LEFT_PAREN);
-        parseParameter();
-        parseOperator();
-        parseParameter();
+        Parameter parameter1 = parseParameter();
+        expStr += parameter1.toString();
+        string operParam = parseOperator();
+        expStr += operParam;
+        Parameter parameter2 = parseParameter();
+        expStr += parameter2.toString() + currentToken.getValue();
         match(RIGHT_PAREN);
+        return expStr;
     }
-    void parseOperator() {
+    string parseOperator() {
         // operator	->	ADD | MULTIPLY
+        string operStr = currentToken.getValue();
         if (peek(ADD)) {
             match(ADD);
-        }
-        if (peek(MULTIPLY)) {
+        } else if (peek(MULTIPLY)) {
             match(MULTIPLY);
+        } else {
+            throw currentToken;
         }
+        return operStr;
     }
 };
 
