@@ -1,23 +1,20 @@
 #ifndef RELATION_H
 #define RELATION_H
 
-#include <string>
 using namespace std;
 
 class Relation {
    private:
-    string value;
+    //  contains a set of Tuples associated with a name and Header
 
    public:
-    Relation(string paramVal) {
-        value = paramVal;
-    }
-    void setValue(string paramVal) {
-        value = paramVal;
-    }
-    string toString() const {
-        return value;
-    }
+    // Relation(string paramVal) {
+    //     value = paramVal;
+    // }
+    // string toString() const {
+    //     toString that prints out each tuple
+    //      Use a for-each loop on the set
+    // }
 };
 
 #endif

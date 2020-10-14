@@ -1,23 +1,19 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <string>
 using namespace std;
 
 class Database {
    private:
-    string value;
+    // contains a map from name (string) to Relation
 
    public:
-    Database(string paramVal) {
-        value = paramVal;
-    }
-    void setValue(string paramVal) {
-        value = paramVal;
-    }
-    string toString() const {
-        return value;
-    }
+    // Database(string paramVal) {
+    //     value = paramVal;
+    // }
+    // string toString() const {
+    //     return value;
+    // }
 };
 
 #endif

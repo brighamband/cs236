@@ -7,7 +7,7 @@ using namespace std;
 
 class Tuple {
    private:
-    string<vector> valuesVctr;
+    string<vector> values;
 
    public:
     // Tuple(string paramVal) {
