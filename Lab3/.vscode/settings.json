@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp"
+    }
+}
