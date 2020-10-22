@@ -33,8 +33,13 @@ int main(int argc, char *argv[]) {
     vector<Token> lexerTokens = lexer.run(inputString);
 
     // run parser (exit program if fails)
-    Parser parser(lexerTokens);
-    if (!parser.parse()) {
+    try {
+        Parser parser(lexerTokens);
+        DatalogProgram datalog = parser.parse();
+        cout << "Success!\n";
+        cout << datalog.toString();
+    } catch (Token badToken) {
+        cerr << "Failure!\n  " << badToken.toString() << "\n";
         return 0;
     }
 

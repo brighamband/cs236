@@ -6,6 +6,8 @@
 
 class Interpreter {
    private:
+    DatalogProgram datalog;
+
    public:
     // Interpreter(...) {
 

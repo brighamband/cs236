@@ -23,7 +23,6 @@ class Parser {
         tokenVctr = lexerTokens;
         currentToken = tokenVctr.front();
     }
-    // DatalogProgram datalog;
     bool peek(tokenType expectedToken) {
         if (currentToken.getType() == expectedToken) {
             return true;
@@ -42,16 +41,9 @@ class Parser {
             throw currentToken;
         }
     }
-    bool parse() {
-        try {
-            parseDatalogProgram();
-            cout << "Success!\n";
-            cout << datalog.toString();
-            return true;
-        } catch (Token badToken) {
-            cerr << "Failure!\n  " << badToken.toString() << "\n";
-            return false;
-        }
+    DatalogProgram parse() {
+        parseDatalogProgram();
+        return datalog;
     }
     void parseDatalogProgram() {
         // datalogProgram	->	SCHEMES COLON scheme schemeList FACTS COLON factList RULES COLON ruleList QUERIES COLON query queryList EOF
