@@ -9,13 +9,14 @@ class Tuple {
     std::vector<std::string> values;
 
    public:
-    // Tuple(string paramVal) {
-    //     value = paramVal;
-    // }
-    bool operator<(const Tuple other) const {
+    Tuple() {}
+    Tuple(std::vector<std::string> v) {
+        values = v;
+    }
+    bool operator<(const Tuple& other) const {
         return values < other.values;  // compare this Tuple to other Tuple
     }
-    std::string toString() const {
+    std::string toString() const {  // FOR DEBUGGING ONLY - USE RELATION TOSTRING IN ACTUAL OUTPUT
         std::string tupleStr = "";
         for (int i = 0; i < values.size(); i++) {
             tupleStr += "-" + values.at(i);

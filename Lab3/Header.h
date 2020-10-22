@@ -9,12 +9,17 @@ class Header {
     std::vector<std::string> names;
 
    public:
-    // Header(std::string n) {
-    //     names.push_back(n);
-    // }
-    // string toString() const {
-    //     return value;
-    // }
+    Header() {}
+    Header(std::vector<std::string> n) {
+        names = n;
+    }
+    std::string toString() const {  // FOR DEBUGGING ONLY - USE RELATION TOSTRING IN ACTUAL OUTPUT
+        std::string headerStr = "";
+        for (int i = 0; i < names.size(); i++) {
+            headerStr += "-" + names.at(i);
+        }
+        return headerStr;
+    }
 };
 
 #endif
