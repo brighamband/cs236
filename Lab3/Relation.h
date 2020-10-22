@@ -21,6 +21,8 @@ class Relation {
         body.insert(newTuple);
     }
 
+    /*
+
     // FIXME -- MAKE SURE TO RETURN **NEW** RELATION
     // Relation* select(stuff){
     // Relation toReturn(stuff);
@@ -49,16 +51,20 @@ class Relation {
         return &newRelation;
     }
 
+    */
+
     std::string toString() const {
         std::string relationStr = "";
-        // also print header
         for (Tuple row : body) {
-            relationStr += row.toString();
+            for (size_t i = 0; i < header.getSize(); i++) {
+                if (i > 0) {
+                    relationStr += ", ";
+                }
+                relationStr += header.getName(i) + "=\'" + row.getValue(i) + "\'";
+            }
+            relationStr += "\n";
         }
         return relationStr;
-        // for (auto it = s.begin(); it != s.end(); it++)
-        //     cout << *it << " ";
-        // }
     }
 };
 

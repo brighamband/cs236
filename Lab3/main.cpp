@@ -2,50 +2,65 @@
 #include <iostream>
 #include <string>
 
-#include "DatalogProgram.h"
-#include "Interpreter.h"
-#include "Lexer.h"
-#include "Parser.h"
+// #include "DatalogProgram.h"
+// #include "Interpreter.h"
+// #include "Lexer.h"
+// #include "Parser.h"
+// DELETE THESE
+#include "Header.h"
+#include "Relation.h"
+#include "Tuple.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        cerr << "Please provide the name of input file.";
+        std::cerr << "Please provide the name of input file.";
         return 1;
     }
 
-    ifstream in(argv[1]);
+    std::ifstream in(argv[1]);
     if (!in) {
-        cerr << "Unable to open " << argv[1] << " for input";
+        std::cerr << "Unable to open " << argv[1] << " for input";
         return 1;
     }
 
-    // get input, add to string
-    std::string line = "";
-    std::string inputString = "";
-    char inputChar = '\0';
+    // // get input, add to string
+    // std::string line = "";
+    // std::string inputString = "";
+    // char inputChar = '\0';
 
-    while (in.get(inputChar)) {
-        inputString += inputChar;
-    }
+    // while (in.get(inputChar)) {
+    //     inputString += inputChar;
+    // }
 
-    // run lexer
-    Lexer lexer;
-    vector<Token> lexerTokens = lexer.run(inputString);
+    // // run lexer
+    // Lexer lexer;
+    // vector<Token> lexerTokens = lexer.run(inputString);
 
-    // run parser (exit program if fails)
-    Parser parser(lexerTokens);
-    DatalogProgram datalog;
-    try {
-        datalog = parser.parse();
-        cout << "Success!\n";
-        cout << datalog.toString();
-    } catch (Token badToken) {
-        cerr << "Failure!\n  " << badToken.toString() << "\n";
-        return 0;
-    }
+    // // run parser (exit program if fails)
+    // Parser parser(lexerTokens);
+    // DatalogProgram datalog;
+    // try {
+    //     datalog = parser.parse();
+    //     std::cout << "Success!\n";
+    //     std::cout << datalog.toString();
+    // } catch (Token badToken) {
+    //     std::cerr << "Failure!\n  " << badToken.toString() << "\n";
+    //     return 0;
+    // }
 
-    // run interpreter
-    Interpreter interpreter(datalog);
+    // // run interpreter
+    // Interpreter interpreter(datalog);
+
+    Header header({"S", "N", "A", "P"});
+    Tuple t1({"12345", "Charlie", "12 Apple St.", "555-1234"});
+    Tuple t2({"33333", "Snoopy", "12 Apple St.", "555-1234"});
+    Tuple t3({"67890", "Lucy", "34 Pear Ave.", "555-5678"});
+
+    Relation relation("snap", header);
+    relation.addTuple(t1);
+    relation.addTuple(t2);
+    relation.addTuple(t3);
+    std::cout << relation.toString() << std::endl;
 
     return 0;
 }

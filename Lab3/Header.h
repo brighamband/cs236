@@ -13,10 +13,19 @@ class Header {
     Header(std::vector<std::string> n) {
         names = n;
     }
-    std::string toString() const {  // FOR DEBUGGING ONLY - USE RELATION TOSTRING IN ACTUAL OUTPUT
+    size_t getSize() const {
+        return names.size();
+    }
+    std::string getName(size_t index) const {
+        return names.at(index);
+    }
+    std::string toString() const {
         std::string headerStr = "";
-        for (int i = 0; i < names.size(); i++) {
-            headerStr += "-" + names.at(i);
+        for (size_t i = 0; i < names.size(); i++) {
+            if (i > 0) {
+                headerStr += ", ";
+            }
+            headerStr += names.at(i);
         }
         return headerStr;
     }

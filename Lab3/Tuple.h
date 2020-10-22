@@ -16,10 +16,16 @@ class Tuple {
     bool operator<(const Tuple& other) const {
         return values < other.values;  // compare this Tuple to other Tuple
     }
-    std::string toString() const {  // FOR DEBUGGING ONLY - USE RELATION TOSTRING IN ACTUAL OUTPUT
+    std::string getValue(size_t index) const {
+        return values.at(index);
+    }
+    std::string toString() const {
         std::string tupleStr = "";
-        for (int i = 0; i < values.size(); i++) {
-            tupleStr += "-" + values.at(i);
+        for (size_t i = 0; i < values.size(); i++) {
+            if (i > 0) {
+                tupleStr += ", ";
+            }
+            tupleStr += values.at(i);
         }
         return tupleStr;
     }
