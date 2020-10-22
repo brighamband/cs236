@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 
-// #include "DatalogProgram.h"
-// #include "Interpreter.h"
-// #include "Lexer.h"
-// #include "Parser.h"
+#include "DatalogProgram.h"
+#include "Interpreter.h"
+#include "Lexer.h"
+#include "Parser.h"
 // DELETE THESE
 #include "Header.h"
 #include "Relation.h"
@@ -23,30 +23,30 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // // get input, add to string
-    // std::string line = "";
-    // std::string inputString = "";
-    // char inputChar = '\0';
+    // get input, add to string
+    std::string line = "";
+    std::string inputString = "";
+    char inputChar = '\0';
 
-    // while (in.get(inputChar)) {
-    //     inputString += inputChar;
-    // }
+    while (in.get(inputChar)) {
+        inputString += inputChar;
+    }
 
-    // // run lexer
-    // Lexer lexer;
-    // vector<Token> lexerTokens = lexer.run(inputString);
+    // run lexer
+    Lexer lexer;
+    vector<Token> lexerTokens = lexer.run(inputString);
 
-    // // run parser (exit program if fails)
-    // Parser parser(lexerTokens);
-    // DatalogProgram datalog;
-    // try {
-    //     datalog = parser.parse();
-    //     std::cout << "Success!\n";
-    //     std::cout << datalog.toString();
-    // } catch (Token badToken) {
-    //     std::cerr << "Failure!\n  " << badToken.toString() << "\n";
-    //     return 0;
-    // }
+    // run parser (exit program if fails)
+    Parser parser(lexerTokens);
+    DatalogProgram datalog;
+    try {
+        datalog = parser.parse();
+        std::cout << "Success!\n";
+        std::cout << datalog.toString();
+    } catch (Token badToken) {
+        std::cerr << "Failure!\n  " << badToken.toString() << "\n";
+        return 0;
+    }
 
     // // run interpreter
     // Interpreter interpreter(datalog);

@@ -11,64 +11,64 @@ using namespace std;
 
 class DatalogProgram {
    private:
-    vector<Predicate> schemesVctr;
-    vector<Predicate> factsVctr;
-    vector<Rule> rulesVctr;
-    vector<Predicate> queriesVctr;
-    set<string> domainSet;
+    vector<Predicate> schemes;
+    vector<Predicate> facts;
+    vector<Rule> rules;
+    vector<Predicate> queries;
+    set<string> domain;
 
    public:
-    void addScheme(Predicate scheme) {
-        schemesVctr.push_back(scheme);
+    void addScheme(Predicate s) {
+        schemes.push_back(s);
     }
-    void addFact(Predicate fact) {
-        factsVctr.push_back(fact);
+    void addFact(Predicate f) {
+        facts.push_back(f);
     }
-    void addRule(Rule rule) {
-        rulesVctr.push_back(rule);
+    void addRule(Rule r) {
+        rules.push_back(r);
     }
-    void addQuery(Predicate query) {
-        queriesVctr.push_back(query);
+    void addQuery(Predicate q) {
+        queries.push_back(q);
     }
-    void addDomain(string domain) {
-        domainSet.insert(domain);
+    void addDomain(string d) {
+        domain.insert(d);
     }
     string toStringSchemes() const {
         string schemesStr = "";
-        schemesStr += "Schemes(" + to_string(schemesVctr.size()) + "):\n";
-        for (unsigned int i = 0; i < schemesVctr.size(); i++) {
-            schemesStr += "  " + schemesVctr.at(i).toString() + "\n";
+        schemesStr += "Schemes(" + to_string(schemes.size()) + "):\n";
+        for (unsigned int i = 0; i < schemes.size(); i++) {
+            schemesStr += "  " + schemes.at(i).toString() + "\n";
         }
         return schemesStr;
     }
     string toStringFacts() const {
         string factsStr = "";
-        factsStr += "Facts(" + to_string(factsVctr.size()) + "):\n";
-        for (unsigned int i = 0; i < factsVctr.size(); i++) {
-            factsStr += "  " + factsVctr.at(i).toString() + ".\n";
+        factsStr += "Facts(" + to_string(facts.size()) + "):\n";
+        for (unsigned int i = 0; i < facts.size(); i++) {
+            factsStr += "  " + facts.at(i).toString() + ".\n";
         }
         return factsStr;
     }
     string toStringRules() const {
         string rulesStr = "";
-        rulesStr += "Rules(" + to_string(rulesVctr.size()) + "):\n";
-        for (unsigned int i = 0; i < rulesVctr.size(); i++) {
-            rulesStr += "  " + rulesVctr.at(i).toString() + ".\n";
+        rulesStr += "Rules(" + to_string(rules.size()) + "):\n";
+        for (unsigned int i = 0; i < rules.size(); i++) {
+            rulesStr += "  " + rules.at(i).toString() + ".\n";
         }
         return rulesStr;
     }
     string toStringQueries() const {
         string queriesStr = "";
-        queriesStr += "Queries(" + to_string(queriesVctr.size()) + "):\n";
-        for (unsigned int i = 0; i < queriesVctr.size(); i++) {
-            queriesStr += "  " + queriesVctr.at(i).toString() + "?\n";
+        queriesStr += "Queries(" + to_string(queries.size()) + "):\n";
+        for (unsigned int i = 0; i < queries.size(); i++) {
+            queriesStr += "  " + queries.at(i).toString() + "?\n";
         }
         return queriesStr;
     }
     string toStringDomain() const {
         string domainStr = "";
-        domainStr += "Domain(" + to_string(domainSet.size()) + "):\n";
-        for (set<string>::iterator iter = domainSet.begin(); iter != domainSet.end(); ++iter) {
+        domainStr += "Domain(" + to_string(domain.size()) + "):\n";
+        for (set<string>::iterator iter = domain.begin(); iter != domain.end(); ++iter) {
             domainStr += "  " + *iter + "\n";
         }
         return domainStr;
