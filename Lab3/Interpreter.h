@@ -9,9 +9,9 @@ class Interpreter {
     DatalogProgram datalog;
 
    public:
-    // Interpreter(...) {
-
-    // }
+    Interpreter(DatalogProgram d) {
+        datalog = d;
+    }
     // Make an Interpreter class that
     //      Takes a DatalogProgram (the vectors of schemes, facts, rules, and queries)
     //      Stores the DatalogProgram as a data member

@@ -3,9 +3,9 @@
 #include <string>
 
 #include "DatalogProgram.h"
+#include "Interpreter.h"
 #include "Lexer.h"
 #include "Parser.h"
-using namespace std;
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -20,8 +20,8 @@ int main(int argc, char *argv[]) {
     }
 
     // get input, add to string
-    string line = "";
-    string inputString = "";
+    std::string line = "";
+    std::string inputString = "";
     char inputChar = '\0';
 
     while (in.get(inputChar)) {
@@ -33,15 +33,19 @@ int main(int argc, char *argv[]) {
     vector<Token> lexerTokens = lexer.run(inputString);
 
     // run parser (exit program if fails)
+    Parser parser(lexerTokens);
+    DatalogProgram datalog;
     try {
-        Parser parser(lexerTokens);
-        DatalogProgram datalog = parser.parse();
+        datalog = parser.parse();
         cout << "Success!\n";
         cout << datalog.toString();
     } catch (Token badToken) {
         cerr << "Failure!\n  " << badToken.toString() << "\n";
         return 0;
     }
+
+    // run interpreter
+    Interpreter interpreter(datalog);
 
     return 0;
 }
