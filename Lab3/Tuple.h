@@ -3,28 +3,25 @@
 
 #include <string>
 #include <vector>
-using namespace std;
 
 class Tuple {
    private:
-    string<vector> values;
+    std::vector<std::string> values;
 
    public:
     // Tuple(string paramVal) {
     //     value = paramVal;
     // }
-    // bool operator<(const Tuple& other) const {
-    //     // compare this Tuple to other Tuple
-    // }
-    // bool operator<(const Tuple b) const {
-    //     return data < b.data;
-    // }
-    // void setValue(string paramVal) {
-    //     value = paramVal;
-    // }
-    // string toString() const {
-    //     return value;
-    // }
+    bool operator<(const Tuple other) const {
+        return values < other.values;  // compare this Tuple to other Tuple
+    }
+    std::string toString() const {
+        std::string tupleStr = "";
+        for (int i = 0; i < values.size(); i++) {
+            tupleStr += "-" + values.at(i);
+        }
+        return tupleStr;
+    }
 };
 
 #endif

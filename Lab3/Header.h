@@ -3,15 +3,14 @@
 
 #include <string>
 #include <vector>
-using namespace std;
 
 class Header {
    private:
-    string<vector> names;
+    std::vector<std::string> names;
 
    public:
-    // Header(string paramVal) {
-    //     value = paramVal;
+    // Header(std::string n) {
+    //     names.push_back(n);
     // }
     // string toString() const {
     //     return value;

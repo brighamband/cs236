@@ -3,7 +3,6 @@
 
 #include "Database.h"
 #include "DatalogProgram.h"
-using namespace std;
 
 class Interpreter {
    private:
