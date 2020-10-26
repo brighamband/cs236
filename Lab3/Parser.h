@@ -210,9 +210,13 @@ class Parser {
         // parameter	->	STRING | ID | expression
         Parameter paramStr(currentToken.getValue());
         if (peek(STRING)) {
+            paramStr.setIsConstant(true);
+            cout << "C ";
             match(STRING);
         }
         if (peek(ID)) {
+            paramStr.setIsConstant(false);
+            cout << "V ";
             match(ID);
         }
         if (peek(LEFT_PAREN)) {

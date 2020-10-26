@@ -33,6 +33,9 @@ class DatalogProgram {
     void addDomain(string d) {
         domain.insert(d);
     }
+    vector<Predicate> getSchemes() const {
+        return schemes;
+    }
     string toStringSchemes() const {
         string schemesStr = "";
         schemesStr += "Schemes(" + to_string(schemes.size()) + "):\n";

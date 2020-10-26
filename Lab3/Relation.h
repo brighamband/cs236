@@ -2,6 +2,7 @@
 #define RELATION_H
 
 #include <set>
+#include <string>
 
 #include "Header.h"
 #include "Tuple.h"
@@ -17,16 +18,27 @@ class Relation {
         name = n;
         header = h;
     }
+    // ADD A DESTRUCTOR??
     void addTuple(Tuple newTuple) {
         body.insert(newTuple);
     }
 
+    // Relation* selectValue(index, std::string value) {
+    //     Relation* newRelation = new Relation(name, header);
+    //     // look through every tuple in relation
+    //     for (Tuple row : body) {
+    //         if (row.at(index) == value) {
+    //             newRelation.addTuple(row);
+    //         }
+    //     }
+
+    //     // If tuple.at index == value
+    //     // add to the new relation
+    // }
+    // return newRelation;
+
     /*
 
-    // FIXME -- MAKE SURE TO RETURN **NEW** RELATION
-    // Relation* select(stuff){
-    // Relation toReturn(stuff);
-    // return &toReturn;
 
     // The select operation does not change the header of the relation. The header of the relation resulting from the select is the same as the header of the original relation.
 

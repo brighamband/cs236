@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <map>  //FIXME
 #include <string>
 
 #include "DatalogProgram.h"
@@ -61,6 +62,20 @@ int main(int argc, char *argv[]) {
     relation.addTuple(t2);
     relation.addTuple(t3);
     std::cout << relation.toString() << std::endl;
+
+    std::map<std::string, Relation *> myMap;
+    myMap["first"] = &relation;
+    // myMap["second"] = 2;
+    // myMap["third"] = 3;
+
+    cout << myMap["third"] << "\n";
+
+    //   if (it != mymap.end()) cout <<
+    // string toFind = "first";
+    // if (myMap.find(toFind) != myMap.end()) {
+    //     cout << myMap.find(toFind)->second << "\n";
+    // }
+    // std::cout << it << endl;
 
     return 0;
 }
