@@ -18,37 +18,31 @@ class Relation {
         name = n;
         header = h;
     }
-    // ADD A DESTRUCTOR??
     void addTuple(Tuple newTuple) {
         body.insert(newTuple);
     }
+    Relation* select(int column, std::string value) {
+        Relation* newRelation = new Relation(name, header);
 
-    // Relation* selectValue(index, std::string value) {
-    //     Relation* newRelation = new Relation(name, header);
-    //     // look through every tuple in relation
-    //     for (Tuple row : body) {
-    //         if (row.at(index) == value) {
-    //             newRelation.addTuple(row);
-    //         }
-    //     }
+        for (Tuple row : body) {
+            if (row.getValue(column) == value) {
+                newRelation->addTuple(row);
+            }
+        }
+        return newRelation;
+    }
+    Relation* select(int column1, int column2) {
+        Relation* newRelation = new Relation(name, header);
 
-    //     // If tuple.at index == value
-    //     // add to the new relation
-    // }
-    // return newRelation;
-
+        for (Tuple row : body) {
+            if (row.getValue(column1) == row.getValue(column2)) {
+                newRelation->addTuple(row);
+            }
+        }
+        return newRelation;
+    }
     /*
 
-
-    // The select operation does not change the header of the relation. The header of the relation resulting from the select is the same as the header of the original relation.
-
-    //  One version of select finds all the tuples that have a constant value in a certain column.
-    //  This select function could take two parameters, a position and a value. The given position in a tuple would need to have a value equal to the given value for that tuple to be included
-    Relation* selectValue() {}
-    //  Another version of select finds all the tuples that have the same value in two different columns (it doesn't matter what the value is, as long as both columns have the same value).
-
-    //  This select function could take two parameters that are both positions. The two given positions in a tuple would need to have equal values for that tuple to be included in the result.
-    Relation* selectIndex() {}
     //  The project operation changes the number and order of columns in a relation. The resulting relation may have either the same number or fewer columns. Project changes the header and all the tuples in the relation.
 
     //  The parameter to the project function could be a list of the positions of the columns that should be included in the result.
