@@ -41,24 +41,21 @@ class Relation {
         }
         return newRelation;
     }
-    /*
-
-    //  The project operation changes the number and order of columns in a relation. The resulting relation may have either the same number or fewer columns. Project changes the header and all the tuples in the relation.
-
-    //  The parameter to the project function could be a list of the positions of the columns that should be included in the result.
-    Relation* project() {}
     // The rename operation changes the header of the relation. The resulting relation has the same tuples as the original.
-
-    //  Should rename change one attribute at a time, or replace the entire list of attributes at once?
     //  Replacing the entire list of attributes is easier and avoids issues with name conflicts.
-    Relation* rename(std::vector<std::string> newHeader) {
-        Relation newRelation(name, newHeader);
-        // newRelation.addTuple(body);  // FIXME - Make sure to add back body to new relation
-        return &newRelation;
+    Relation* rename(Header newHeader) {
+        Relation* newRelation = new Relation(name, newHeader);
+        for (Tuple row : body) {
+            newRelation->addTuple(row);
+        }
+        return newRelation;
     }
-
-    */
-
+    //  The project operation changes the number and order of columns in a relation. The resulting relation may have either the same number or fewer columns. Project changes the header and all the tuples in the relation.
+    //  The parameter to the project function could be a list of the positions of the columns that should be included in the result.
+    Relation* project() {
+        Relation* newRelation = new Relation(name, header);
+        return newRelation;
+    }
     std::string toString() const {
         std::string relationStr = "";
         for (Tuple row : body) {

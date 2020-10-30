@@ -14,7 +14,7 @@ class Tuple {
         values = v;
     }
     bool operator<(const Tuple& other) const {
-        return values < other.values;  // compare this Tuple to other Tuple
+        return values < other.values;
     }
     std::string getValue(size_t index) const {
         return values.at(index);

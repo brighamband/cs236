@@ -63,10 +63,14 @@ int main(int argc, char *argv[]) {
     relation.addTuple(t2);
     relation.addTuple(t3);
     relation.addTuple(t4);
-    std::cout << relation.toString() << std::endl;
+    std::cout << relation.toString() << std::endl
+              << std::endl;
 
-    std::cout << relation.select(1, "Snoopy")->toString();
-    std::cout << relation.select(1, 3)->toString();
+    // std::cout << relation.select(1, "Snoopy")->toString();
+    // std::cout << relation.select(1, 3)->toString();
+
+    // Header newHeader({"S", "N", "O", "P"});
+    // std::cout << relation.rename(newHeader)->toString();
 
     // std::map<std::string, Relation *> myMap;
     // myMap["first"] = &relation;

@@ -15,7 +15,7 @@ class Interpreter {
         //  Makes a Database using the schemes and the facts, and stores it as a data member
         // datalog.getSchemes();
     }
-    // DELETE NEW RELATION
+    // DELETE NEW RELATIONS MADE
 
     // Algorithm
 
