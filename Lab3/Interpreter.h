@@ -2,7 +2,8 @@
 #define INTERPRETER_H
 
 #include <map>
-// #include <set>
+#include <string>
+#include <vector>
 
 #include "Database.h"
 #include "DatalogProgram.h"
@@ -16,36 +17,35 @@ class Interpreter {
     // Interpreter() {}
     Interpreter(DatalogProgram d) {
         datalog = d;
-        // database = makeDatabase();
+        database = makeDatabase();
     }
-    // DELETE NEW RELATIONS MADE
-    // Database makeDatabase() {
-    //     std::string key;
-    //     std::map<std::string, Relation*> newDb;
-
-    //     for (size_t i = 0; i < datalog.getNumSchemes(); i++) {
-    //         key = datalog.getSchemeName(i);
-    //         Relation* newRelation = new Relation(key);
-    //         // std::set<Tuple> relationBody;
-
-    //         // std::cout << datalog.getSchemeName(i);
-
-    //         for (size_t j = 0; j < datalog.getNumFacts(); j++) {
-    //             // std::cout << datalog.getFactsName(j);
-    //             // std::cout datalog.getFacts();
-    //             std::vector<std::string> vec;
-    //             if (datalog.getFactName(j) == key) {
-    //                 newRelation->addTuple(Tuple(datalog.get));
-    //             }
-    //             // std::cout << i << " " << datalog.getFact(i) << " ";
-    //         }
-    //         std::cout << std::endl;
-    //         newDb.insert({key, newRelation});
-    //         // newDb.insert({key, new Relation(key, )});
-    //     }
-
-    //     return newDb;
+    // ~Interpreter() {
+    //     // DELETE NEW RELATIONS MADE
     // }
+    Database makeDatabase() {
+        std::string key;
+        std::map<std::string, Relation*> newDb;
+
+        for (size_t i = 0; i < datalog.getNumSchemes(); i++) {
+            key = datalog.getSchemeName(i);
+            Relation* newRelation = new Relation(key);
+            Header newHeader(datalog.convertSchemeParams(i));
+            newRelation->setHeader(newHeader);
+
+            for (size_t j = 0; j < datalog.getNumFacts(); j++) {
+                std::vector<std::string> vec;
+                if (datalog.getFactName(j) == key) {
+                    newRelation->addTuple(Tuple(datalog.convertFactParams(j)));
+                }
+            }
+            newDb.insert({key, newRelation});
+        }
+        return newDb;
+    }
+    std::string toString() const {
+        database.toString();
+        return "FIXME";
+    }
     // Relation* evaluatePredicate() {}
     // void evaluateQueries() {}
     // Algorithm

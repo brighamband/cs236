@@ -45,11 +45,11 @@ class DatalogProgram {
     string getFactName(size_t index) const {
         return facts.at(index).getName();
     }
-    vector<string> convertSchemeParamsToVS(size_t index) {
-        return schemes.at(index).convertParamsToVS();
+    vector<string> convertSchemeParams(size_t index) {
+        return schemes.at(index).convertParams();
     }
-    vector<string> convertFactParamsToVS(size_t index) {
-        return facts.at(index).convertParamsToVS();
+    vector<string> convertFactParams(size_t index) {
+        return facts.at(index).convertParams();
     }
     string toStringSchemes() const {
         string schemesStr = "";

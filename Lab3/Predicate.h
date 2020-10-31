@@ -24,7 +24,7 @@ class Predicate {
     string getParam(size_t index) const {
         return paramList.at(index).toString();
     }
-    vector<string> convertParamsToVS() {
+    vector<string> convertParams() {
         vector<string> vs;
         for (size_t i = 0; i < paramList.size(); i++) {
             vs.push_back(paramList.at(i).toString());
