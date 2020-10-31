@@ -13,7 +13,7 @@ class Header {
     Header(std::vector<std::string> n) {
         names = n;
     }
-    size_t getSize() const {
+    int getSize() const {
         return names.size();
     }
     std::string getName(size_t index) const {

@@ -14,8 +14,15 @@ class Relation {
     std::set<Tuple> body;
 
    public:
+    Relation() {}
+    Relation(std::string n) {
+        name = n;
+    }
     Relation(std::string n, Header h) {
         name = n;
+        header = h;
+    }
+    void setHeader(Header h) {
         header = h;
     }
     void addTuple(Tuple newTuple) {
@@ -41,8 +48,6 @@ class Relation {
         }
         return newRelation;
     }
-    // The rename operation changes the header of the relation. The resulting relation has the same tuples as the original.
-    //  Replacing the entire list of attributes is easier and avoids issues with name conflicts.
     Relation* rename(Header newHeader) {
         Relation* newRelation = new Relation(name, newHeader);
         for (Tuple row : body) {
@@ -50,16 +55,36 @@ class Relation {
         }
         return newRelation;
     }
-    //  The project operation changes the number and order of columns in a relation. The resulting relation may have either the same number or fewer columns. Project changes the header and all the tuples in the relation.
-    //  The parameter to the project function could be a list of the positions of the columns that should be included in the result.
-    Relation* project() {
-        Relation* newRelation = new Relation(name, header);
+    Relation* project(std::vector<int> columnsToKeep) {
+        Relation* newRelation = new Relation(name);
+        std::vector<std::string> vs;
+        for (int i = 0; i < header.getSize(); i++) {
+            for (size_t j = 0; j < columnsToKeep.size(); j++) {
+                if (i == columnsToKeep.at(j)) {
+                    vs.push_back(header.getName(columnsToKeep.at(j)));
+                }
+            }
+        }
+        Header newHeader(vs);
+        newRelation->setHeader(newHeader);
+
+        for (Tuple row : body) {
+            std::vector<std::string> vs;
+            for (int i = 0; i < header.getSize(); i++) {
+                for (size_t j = 0; j < columnsToKeep.size(); j++) {
+                    if (i == columnsToKeep.at(j)) {
+                        vs.push_back(row.getValue(columnsToKeep.at(j)));
+                    }
+                }
+            }
+            newRelation->addTuple(Tuple(vs));
+        }
         return newRelation;
     }
     std::string toString() const {
         std::string relationStr = "";
         for (Tuple row : body) {
-            for (size_t i = 0; i < header.getSize(); i++) {
+            for (int i = 0; i < header.getSize(); i++) {
                 if (i > 0) {
                     relationStr += ", ";
                 }

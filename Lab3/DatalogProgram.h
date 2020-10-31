@@ -4,10 +4,10 @@
 #include <set>
 #include <string>
 #include <vector>
+using namespace std;
 
 #include "Predicate.h"
 #include "Rule.h"
-using namespace std;
 
 class DatalogProgram {
    private:
@@ -33,8 +33,23 @@ class DatalogProgram {
     void addDomain(string d) {
         domain.insert(d);
     }
-    vector<Predicate> getSchemes() const {
-        return schemes;
+    size_t getNumSchemes() const {
+        return schemes.size();
+    }
+    size_t getNumFacts() const {
+        return facts.size();
+    }
+    string getSchemeName(size_t index) const {
+        return schemes.at(index).getName();
+    }
+    string getFactName(size_t index) const {
+        return facts.at(index).getName();
+    }
+    vector<string> convertSchemeParamsToVS(size_t index) {
+        return schemes.at(index).convertParamsToVS();
+    }
+    vector<string> convertFactParamsToVS(size_t index) {
+        return facts.at(index).convertParamsToVS();
     }
     string toStringSchemes() const {
         string schemesStr = "";

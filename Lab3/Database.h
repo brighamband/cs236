@@ -7,16 +7,16 @@
 
 class Database {
    private:
-    // contains a map from name (string) to Relation
-    std::map<std::string, Relation*> relationMap;
+    std::map<std::string, Relation*> db;
 
    public:
-    // Database(string paramVal) {
-    //     value = paramVal;
-    // }
+    Database() {}
+    Database(std::map<std::string, Relation*> d) {
+        db = d;
+    }
     // ONLY USE FOR Database in Project 3 -- Look up a relation when you are given the relation's name
     Relation* getRelation(std::string name) {  // FIXME - Should this be *pointer?  Should this be const?
-        Relation* relPtr = relationMap[name];
+        Relation* relPtr = db[name];
         return relPtr;
     }
 

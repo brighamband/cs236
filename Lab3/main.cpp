@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // // run interpreter
-    // Interpreter interpreter(datalog);
+    // run interpreter
+    Interpreter interpreter(datalog);
 
     Header header({"S", "N", "A", "P"});
     Tuple t1({"12345", "Charlie", "12 Apple St.", "555-1234"});
@@ -63,14 +63,17 @@ int main(int argc, char *argv[]) {
     relation.addTuple(t2);
     relation.addTuple(t3);
     relation.addTuple(t4);
-    std::cout << relation.toString() << std::endl
-              << std::endl;
+    // std::cout << relation.toString() << std::endl
+    //           << std::endl;
 
-    // std::cout << relation.select(1, "Snoopy")->toString();
+    std::cout << relation.select(1, "Snoopy")->toString();
     // std::cout << relation.select(1, 3)->toString();
 
     // Header newHeader({"S", "N", "O", "P"});
     // std::cout << relation.rename(newHeader)->toString();
+
+    // TESTING
+    std::cout << relation.project({1, 2})->toString();
 
     // std::map<std::string, Relation *> myMap;
     // myMap["first"] = &relation;

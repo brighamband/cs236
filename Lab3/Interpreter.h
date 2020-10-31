@@ -1,6 +1,9 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+#include <map>
+// #include <set>
+
 #include "Database.h"
 #include "DatalogProgram.h"
 
@@ -10,13 +13,41 @@ class Interpreter {
     Database database;
 
    public:
+    // Interpreter() {}
     Interpreter(DatalogProgram d) {
         datalog = d;
-        //  Makes a Database using the schemes and the facts, and stores it as a data member
-        // datalog.getSchemes();
+        // database = makeDatabase();
     }
     // DELETE NEW RELATIONS MADE
+    // Database makeDatabase() {
+    //     std::string key;
+    //     std::map<std::string, Relation*> newDb;
 
+    //     for (size_t i = 0; i < datalog.getNumSchemes(); i++) {
+    //         key = datalog.getSchemeName(i);
+    //         Relation* newRelation = new Relation(key);
+    //         // std::set<Tuple> relationBody;
+
+    //         // std::cout << datalog.getSchemeName(i);
+
+    //         for (size_t j = 0; j < datalog.getNumFacts(); j++) {
+    //             // std::cout << datalog.getFactsName(j);
+    //             // std::cout datalog.getFacts();
+    //             std::vector<std::string> vec;
+    //             if (datalog.getFactName(j) == key) {
+    //                 newRelation->addTuple(Tuple(datalog.get));
+    //             }
+    //             // std::cout << i << " " << datalog.getFact(i) << " ";
+    //         }
+    //         std::cout << std::endl;
+    //         newDb.insert({key, newRelation});
+    //         // newDb.insert({key, new Relation(key, )});
+    //     }
+
+    //     return newDb;
+    // }
+    // Relation* evaluatePredicate() {}
+    // void evaluateQueries() {}
     // Algorithm
 
     // for each scheme ‘s’
