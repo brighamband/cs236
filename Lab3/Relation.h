@@ -23,11 +23,22 @@ class Relation {
         name = n;
         header = h;
     }
+    Relation(std::string n, Header h, std::set<Tuple> b) {
+        name = n;
+        header = h;
+        body = b;
+    }
     void setHeader(Header h) {
         header = h;
     }
     void addTuple(Tuple newTuple) {
         body.insert(newTuple);
+    }
+    Header getHeader() const {
+        return header;
+    }
+    std::set<Tuple> getBody() const {
+        return body;
     }
     Relation* select(int column, std::string value) {
         Relation* newRelation = new Relation(name, header);

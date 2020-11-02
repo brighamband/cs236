@@ -39,11 +39,17 @@ class DatalogProgram {
     size_t getNumFacts() const {
         return facts.size();
     }
+    size_t getNumQueries() const {
+        return queries.size();
+    }
     string getSchemeName(size_t index) const {
         return schemes.at(index).getName();
     }
     string getFactName(size_t index) const {
         return facts.at(index).getName();
+    }
+    Predicate getQuery(size_t index) const {
+        return queries.at(index);
     }
     vector<string> convertSchemeParams(size_t index) {
         return schemes.at(index).convertParams();

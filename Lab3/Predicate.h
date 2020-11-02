@@ -24,6 +24,12 @@ class Predicate {
     string getParam(size_t index) const {
         return paramList.at(index).toString();
     }
+    size_t getSize() const {
+        return paramList.size();
+    }
+    bool isParamConstant(size_t index) {
+        return paramList.at(index).isConst();
+    }
     vector<string> convertParams() {
         vector<string> vs;
         for (size_t i = 0; i < paramList.size(); i++) {

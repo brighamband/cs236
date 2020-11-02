@@ -19,6 +19,14 @@ class Database {
         Relation* relPtr = db[name];
         return relPtr;
     }
+    Header getHeader(std::string name) {
+        Relation* relPtr = db[name];
+        return relPtr->getHeader();
+    }
+    std::set<Tuple> getBody(std::string name) {
+        Relation* relPtr = db[name];
+        return relPtr->getBody();
+    }
     std::string toString() const {
         for (const auto& pair : db) {
             std::cout << "1: " << pair.first << std::endl;

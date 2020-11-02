@@ -19,6 +19,9 @@ class Parameter {
     void setValue(string paramVal) {
         value = paramVal;
     }
+    bool isConst() {
+        return isConstant;
+    }
     string toString() const {
         return value;
     }
