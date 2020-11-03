@@ -13,6 +13,7 @@ class Relation {
     std::string name;
     Header header;
     std::set<Tuple> body;
+    bool showResults = false;
 
    public:
     Relation() {}
@@ -34,11 +35,20 @@ class Relation {
     void addTuple(Tuple newTuple) {
         body.insert(newTuple);
     }
+    void setShowResults(bool sr) {
+        showResults = sr;
+    }
+    bool getShowResults() {
+        return showResults;
+    }
     Header getHeader() const {
         return header;
     }
     std::set<Tuple> getBody() const {
         return body;
+    }
+    size_t getBodySize() const {
+        return body.size();
     }
     Relation* select(int column, std::string value) {
         Relation* newRelation = new Relation(name, header);
@@ -65,6 +75,7 @@ class Relation {
         for (Tuple row : body) {
             newRelation->addTuple(row);
         }
+        newRelation->setShowResults(true);
         return newRelation;
     }
     Relation* project(std::vector<int> columnsToKeep) {
@@ -100,7 +111,7 @@ class Relation {
                 if (i > 0) {
                     relationStr += ", ";
                 }
-                relationStr += header.getName(i) + "=\'" + row.getValue(i) + "\'";
+                relationStr += "  " + header.getName(i) + "=" + row.getValue(i);
             }
             relationStr += "\n";
         }

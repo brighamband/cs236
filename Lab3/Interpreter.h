@@ -74,19 +74,35 @@ class Interpreter {
 
         if (vi.size() != 0) {
             newRelation = newRelation->project(vi);
-            newRelation = newRelation->rename(vs)
+            newRelation = newRelation->rename(vs);
         }
 
         return newRelation;
     }
-    void evaluateQueries() {
+    std::string evaluateQueries() {
+        std::string queryStr = "";
         for (size_t i = 0; i < datalog.getNumQueries(); i++) {
-            evaluatePredicate(datalog.getQuery(i));)
+            queryStr += toStringQuery(i);
+            Relation* newRelation = evaluatePredicate(datalog.getQuery(i));
+            queryStr += toStringResults(newRelation);
         }
+        return queryStr;
     }
-    std::string toString() const {
-        database.toString();
-        return "FIXME";
+    std::string toStringQuery(size_t index) {
+        return datalog.getQuery(index).toString() + "? ";
+    }
+    std::string toStringResults(Relation* relation) {
+        std::string resultsStr = "";
+        int results = relation->getBodySize();
+        if (results > 0) {
+            resultsStr += "Yes(" + to_string(results) + ")\n";
+            if (relation->getShowResults()) {
+                resultsStr += relation->toString();
+            }
+        } else {
+            resultsStr += "No\n";
+        }
+        return resultsStr;
     }
 };
 

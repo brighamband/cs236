@@ -27,19 +27,6 @@ class Database {
         Relation* relPtr = db[name];
         return relPtr->getBody();
     }
-    std::string toString() const {
-        for (const auto& pair : db) {
-            std::cout << "1: " << pair.first << std::endl;
-            std::cout << "2: " << pair.second->toString();
-            // Relation* rel = pair.second;
-            // cout << rel->toString();
-            std::cout << std::endl
-                      << std::endl;
-            // string name = pair.first;     //gets key
-            // Relation* rel = pair.second;  //gets value
-        }
-        return "FIXME";
-    }
 };
 
 #endif
