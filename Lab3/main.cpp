@@ -1,16 +1,11 @@
 #include <fstream>
 #include <iostream>
-#include <map>  //FIXME
 #include <string>
 
 #include "DatalogProgram.h"
 #include "Interpreter.h"
 #include "Lexer.h"
 #include "Parser.h"
-// DELETE THESE
-#include "Header.h"
-#include "Relation.h"
-#include "Tuple.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -40,14 +35,6 @@ int main(int argc, char *argv[]) {
     // run parser (exit program if fails)
     Parser parser(lexerTokens);
     DatalogProgram datalog = parser.parse();
-    // try {
-    //     datalog = parser.parse();
-    //     // std::cout << "Success!\n";
-    //     // std::cout << datalog.toString();
-    // } catch (Token badToken) {
-    //     std::cerr << "Failure!\n  " << badToken.toString() << "\n";
-    //     return 0;
-    // }
 
     // run interpreter
     Interpreter interpreter(datalog);
