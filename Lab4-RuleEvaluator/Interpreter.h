@@ -15,7 +15,6 @@ class Interpreter {
     Database database;
 
    public:
-    // Interpreter() {}
     Interpreter(DatalogProgram d) {
         datalog = d;
         database = makeDatabase();
@@ -23,23 +22,30 @@ class Interpreter {
     // ~Interpreter() {
     //     // DELETE NEW RELATIONS MADE
     // }
+    Relation* processSchemes(size_t index, std::string key) {
+        Relation* relation = new Relation(key);
+        Header header(datalog.convertSchemeParams(index));
+        relation->setHeader(header);
+        return relation;
+    }
+    Relation* processFacts(DatalogProgram datalog, Relation* relation, std::string key) {
+        for (size_t j = 0; j < datalog.getNumFacts(); j++) {
+            std::vector<std::string> vec;
+            if (datalog.getFactName(j) == key) {
+                relation->addTuple(Tuple(datalog.convertFactParams(j)));
+            }
+        }
+        return relation;
+    }
     Database makeDatabase() {
         std::string key;
         std::map<std::string, Relation*> newDb;
 
         for (size_t i = 0; i < datalog.getNumSchemes(); i++) {
             key = datalog.getSchemeName(i);
-            Relation* newRelation = new Relation(key);
-            Header newHeader(datalog.convertSchemeParams(i));
-            newRelation->setHeader(newHeader);
-
-            for (size_t j = 0; j < datalog.getNumFacts(); j++) {
-                std::vector<std::string> vec;
-                if (datalog.getFactName(j) == key) {
-                    newRelation->addTuple(Tuple(datalog.convertFactParams(j)));
-                }
-            }
-            newDb.insert({key, newRelation});
+            Relation* relation = processSchemes(i, key);
+            relation = processFacts(datalog, relation, key);
+            newDb.insert({key, relation});
         }
         return newDb;
     }
@@ -53,9 +59,7 @@ class Interpreter {
     }
     Relation* evaluatePredicate(Predicate p) {
         std::string name = p.getName();
-        Header header = database.getHeader(name);
-        std::set<Tuple> body = database.getBody(name);
-        Relation* newRelation = new Relation(name, header, body);
+        Relation* relation = database.getRelation(name);
         std::vector<std::string> vs;
         std::vector<int> vi;
 
@@ -63,9 +67,9 @@ class Interpreter {
             int spotSeen = seenBefore(vs, p.getParam(i));
 
             if (p.isParamConstant(i)) {  // Case 1 - Constant
-                newRelation = newRelation->select(i, p.getParam(i));
+                relation = relation->select(i, p.getParam(i));
             } else if (spotSeen != -1) {  // Case 2 - Seen Variable
-                newRelation = newRelation->select(vi.at(spotSeen), i);
+                relation = relation->select(vi.at(spotSeen), i);
             } else {  // Case 3 - New Variable
                 vs.push_back(p.getParam(i));
                 vi.push_back(i);
@@ -73,18 +77,18 @@ class Interpreter {
         }
 
         if (vi.size() != 0) {
-            newRelation = newRelation->project(vi);
-            newRelation = newRelation->rename(vs);
+            relation = relation->project(vi);
+            relation = relation->rename(vs);
         }
 
-        return newRelation;
+        return relation;
     }
     std::string evaluateQueries() {
         std::string queryStr = "";
         for (size_t i = 0; i < datalog.getNumQueries(); i++) {
             queryStr += toStringQuery(i);
-            Relation* newRelation = evaluatePredicate(datalog.getQuery(i));
-            queryStr += toStringResults(newRelation);
+            Relation* relation = evaluatePredicate(datalog.getQuery(i));
+            queryStr += toStringResults(relation);
         }
         return queryStr;
     }

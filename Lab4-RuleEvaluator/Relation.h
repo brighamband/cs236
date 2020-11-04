@@ -16,18 +16,12 @@ class Relation {
     bool showResults = false;
 
    public:
-    Relation() {}
     Relation(std::string n) {
         name = n;
     }
     Relation(std::string n, Header h) {
         name = n;
         header = h;
-    }
-    Relation(std::string n, Header h, std::set<Tuple> b) {
-        name = n;
-        header = h;
-        body = b;
     }
     void setHeader(Header h) {
         header = h;
@@ -51,35 +45,35 @@ class Relation {
         return body.size();
     }
     Relation* select(int column, std::string value) {
-        Relation* newRelation = new Relation(name, header);
+        Relation* relation = new Relation(name, header);
 
         for (Tuple row : body) {
             if (row.getValue(column) == value) {
-                newRelation->addTuple(row);
+                relation->addTuple(row);
             }
         }
-        return newRelation;
+        return relation;
     }
     Relation* select(int column1, int column2) {
-        Relation* newRelation = new Relation(name, header);
+        Relation* relation = new Relation(name, header);
 
         for (Tuple row : body) {
             if (row.getValue(column1) == row.getValue(column2)) {
-                newRelation->addTuple(row);
+                relation->addTuple(row);
             }
         }
-        return newRelation;
+        return relation;
     }
     Relation* rename(Header newHeader) {
-        Relation* newRelation = new Relation(name, newHeader);
+        Relation* relation = new Relation(name, newHeader);
         for (Tuple row : body) {
-            newRelation->addTuple(row);
+            relation->addTuple(row);
         }
-        newRelation->setShowResults(true);
-        return newRelation;
+        relation->setShowResults(true);
+        return relation;
     }
     Relation* project(std::vector<int> columnsToKeep) {
-        Relation* newRelation = new Relation(name);
+        Relation* relation = new Relation(name);
         std::vector<std::string> vs;
         for (int i = 0; i < header.getSize(); i++) {
             for (size_t j = 0; j < columnsToKeep.size(); j++) {
@@ -89,7 +83,7 @@ class Relation {
             }
         }
         Header newHeader(vs);
-        newRelation->setHeader(newHeader);
+        relation->setHeader(newHeader);
 
         for (Tuple row : body) {
             std::vector<std::string> vs;
@@ -100,9 +94,9 @@ class Relation {
                     }
                 }
             }
-            newRelation->addTuple(Tuple(vs));
+            relation->addTuple(Tuple(vs));
         }
-        return newRelation;
+        return relation;
     }
     std::string toString() const {
         std::string relationStr = "";

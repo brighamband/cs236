@@ -14,8 +14,7 @@ class Database {
     Database(std::map<std::string, Relation*> d) {
         db = d;
     }
-    // ONLY USE FOR Database in Project 3 -- Look up a relation when you are given the relation's name
-    Relation* getRelation(std::string name) {  // FIXME - Should this be *pointer?  Should this be const?
+    Relation* getRelation(std::string name) {
         Relation* relPtr = db[name];
         return relPtr;
     }
