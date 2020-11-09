@@ -57,6 +57,7 @@ class Interpreter {
         }
         return -1;
     }
+    // evalPredicates - first makeRHRelation function that converts Preds to vector of Relations
     Relation* evaluatePredicate(Predicate p) {
         std::string name = p.getName();
         Relation* relation = database.getRelation(name);

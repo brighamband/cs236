@@ -98,6 +98,17 @@ class Relation {
         }
         return relation;
     }
+    void unionize(Relation relation) {  // SHOULD THAT BE A POINTER?
+        }
+    // Relation* naturalJoin() {
+    //     for (Tuple t1 : r1) {
+    //         for (Tuple t2 : r2) {
+    //             if (joinable(t1, t2)) {
+    //                 cout << "found a joinable pair" << endl;
+    //             }
+    //         }
+    //     }
+    // }
     std::string toString() const {
         std::string relationStr = "";
         for (Tuple row : body) {

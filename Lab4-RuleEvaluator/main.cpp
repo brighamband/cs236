@@ -1,3 +1,8 @@
+/*
+1   implement union
+2   implement natural join
+3   evaluate rules (query eval, nat join, project, rename, and union)
+*/
 #include <fstream>
 #include <iostream>
 #include <string>
