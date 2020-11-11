@@ -26,8 +26,8 @@ class Relation {
     void setHeader(Header h) {
         header = h;
     }
-    void addTuple(Tuple newTuple) {
-        body.insert(newTuple);
+    bool addTuple(Tuple newTuple) {
+        return body.insert(newTuple).second;
     }
     void setShowResults(bool sr) {
         showResults = sr;
@@ -98,8 +98,14 @@ class Relation {
         }
         return relation;
     }
-    void unionize(Relation relation) {  // SHOULD THAT BE A POINTER?
+    void unionize(Relation& resultRelation) {  // REMOVE THE & IF THERE'S ISSUES
+        std::set<Tuple> resultBody = resultRelation.getBody();
+        for (Tuple row : resultBody) {
+            if (addTuple(row)) {
+                std::cout << rowToString(row);
+            }
         }
+    }
     // Relation* naturalJoin() {
     //     for (Tuple t1 : r1) {
     //         for (Tuple t2 : r2) {
@@ -109,16 +115,21 @@ class Relation {
     //         }
     //     }
     // }
+    std::string rowToString(Tuple row) const {
+        std::string rowStr = "";
+        for (int i = 0; i < header.getSize(); i++) {
+            if (i > 0) {
+                rowStr += ", ";
+            }
+            rowStr += "  " + header.getName(i) + "=" + row.getValue(i);
+        }
+        rowStr += "\n";
+        return rowStr;
+    }
     std::string toString() const {
         std::string relationStr = "";
         for (Tuple row : body) {
-            for (int i = 0; i < header.getSize(); i++) {
-                if (i > 0) {
-                    relationStr += ", ";
-                }
-                relationStr += "  " + header.getName(i) + "=" + row.getValue(i);
-            }
-            relationStr += "\n";
+            relationStr += rowToString(row);
         }
         return relationStr;
     }

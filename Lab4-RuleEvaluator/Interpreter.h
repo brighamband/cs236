@@ -85,13 +85,42 @@ class Interpreter {
         return relation;
     }
     std::string evaluateQueries() {
-        std::string queryStr = "";
+        std::string queriesStr = "Query Evaluation\n";
         for (size_t i = 0; i < datalog.getNumQueries(); i++) {
-            queryStr += toStringQuery(i);
+            queriesStr += toStringQuery(i);
             Relation* relation = evaluatePredicate(datalog.getQuery(i));
-            queryStr += toStringResults(relation);
+            queriesStr += toStringResults(relation);
         }
-        return queryStr;
+        return queriesStr;
+    }
+    std::string evaluateRule(size_t index) {
+        std::string ruleStr = "";
+        ruleStr += toStringRule(index) + "\n";
+        // Evaluate the predicates on the right-hand side of the rule
+        //      // var rh = getRHRelation();
+        //      // rh.evaluatePredicate();
+        // Join the relations that result
+        // Project the columns that appear in the head predicate
+        // Rename the relation to make it union-compatible
+        // Union with the relation in the database
+        return ruleStr;
+    }
+    std::string evaluateRules() {  // MAKE FIXED POINT ALGORITHM
+        std::string rulesStr = "Rule Evaluation\n";
+        for (size_t i = 0; i < datalog.getNumRules(); i++) {
+            rulesStr += evaluateRule(i);
+        }
+        int numPasses = 2;
+        rulesStr += "\n\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
+        return rulesStr;
+    }
+    std::string interpret() {
+        std::string interpretStr = "";
+        interpretStr += evaluateRules() += evaluateQueries();
+        return interpretStr;
+    }
+    std::string toStringRule(size_t index) {
+        return datalog.getRule(index).toString();  //+ "? ";
     }
     std::string toStringQuery(size_t index) {
         return datalog.getQuery(index).toString() + "? ";
