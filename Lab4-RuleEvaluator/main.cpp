@@ -43,7 +43,29 @@ int main(int argc, char *argv[]) {
 
     // run interpreter
     Interpreter interpreter(datalog);
-    std::cout << interpreter.evaluateQueries();
+    std::cout << interpreter.interpret();
+
+    // Header header({"S", "N", "A", "P"});
+    // Tuple t1({"12345", "Charlie", "12 Apple St.", "555-1234"});
+    // Tuple t2({"33333", "Snoopy", "12 Apple St.", "555-1234"});
+    // Tuple t3({"67890", "Lucy", "34 Pear Ave.", "555-5678"});
+    // Tuple t4({"12345", "Charlie", "12 Apple St.", "Charlie"});
+
+    // Relation relation("snap", header);
+    // relation.addTuple(t1);
+    // relation.addTuple(t2);
+    // relation.addTuple(t3);
+    // relation.addTuple(t4);
+
+    // Tuple t5({"12845", "Charlie", "12 Apple St.", "Charlie"});
+
+    // Relation relation2("snap2", header);
+    // relation2.addTuple(t1);
+    // relation2.addTuple(t2);
+    // relation2.addTuple(t3);
+    // relation2.addTuple(t5);
+
+    // relation.unionize(relation2);
 
     return 0;
 }

@@ -17,6 +17,9 @@ class Rule {
         headPredicate = headPred;
         predicateList = listOfPredicates;
     }
+    size_t getSize() const {
+        return predicateList.size();
+    }
     string toString() const {
         string ruleStr = "";
         ruleStr += headPredicate.toString() + " :- ";

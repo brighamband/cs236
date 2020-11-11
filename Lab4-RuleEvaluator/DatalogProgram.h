@@ -39,6 +39,9 @@ class DatalogProgram {
     size_t getNumFacts() const {
         return facts.size();
     }
+    size_t getNumRules() const {
+        return rules.size();
+    }
     size_t getNumQueries() const {
         return queries.size();
     }
@@ -47,6 +50,9 @@ class DatalogProgram {
     }
     string getFactName(size_t index) const {
         return facts.at(index).getName();
+    }
+    Rule getRule(size_t index) const {
+        return rules.at(index);
     }
     Predicate getQuery(size_t index) const {
         return queries.at(index);
