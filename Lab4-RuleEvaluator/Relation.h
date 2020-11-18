@@ -16,6 +16,7 @@ class Relation {
     bool showResults = false;
 
    public:
+    Relation() {}
     Relation(std::string n) {
         name = n;
     }
@@ -75,10 +76,10 @@ class Relation {
     Relation* project(std::vector<int> columnsToKeep) {
         Relation* relation = new Relation(name);
         std::vector<std::string> vs;
-        for (int i = 0; i < header.getSize(); i++) {
-            for (size_t j = 0; j < columnsToKeep.size(); j++) {
-                if (i == columnsToKeep.at(j)) {
-                    vs.push_back(header.getName(columnsToKeep.at(j)));
+        for (size_t i = 0; i < columnsToKeep.size(); i++) {
+            for (int j = 0; j < header.getSize(); j++) {
+                if (j == columnsToKeep.at(i)) {
+                    vs.push_back(header.getName(columnsToKeep.at(i)));
                 }
             }
         }
@@ -87,10 +88,10 @@ class Relation {
 
         for (Tuple row : body) {
             std::vector<std::string> vs;
-            for (int i = 0; i < header.getSize(); i++) {
-                for (size_t j = 0; j < columnsToKeep.size(); j++) {
-                    if (i == columnsToKeep.at(j)) {
-                        vs.push_back(row.getValue(columnsToKeep.at(j)));
+            for (size_t i = 0; i < columnsToKeep.size(); i++) {
+                for (int j = 0; j < header.getSize(); j++) {
+                    if (j == columnsToKeep.at(i)) {
+                        vs.push_back(row.getValue(columnsToKeep.at(i)));
                     }
                 }
             }
@@ -106,15 +107,35 @@ class Relation {
             }
         }
     }
-    // Relation* naturalJoin() {
-    //     for (Tuple t1 : r1) {
-    //         for (Tuple t2 : r2) {
-    //             if (joinable(t1, t2)) {
-    //                 cout << "found a joinable pair" << endl;
-    //             }
-    //         }
-    //     }
+    Header combineHeaders(Header resultHeader, Header header) {
+        Header combinedHeader = resultHeader;
+        for (int i = 0; i < header.getSize(); i++) {
+            // if (header.getName(i) != combinedHeader.getName(i)) {  // FIXME
+            //     combinedHeader.addName(combinedHeader.getName(i));
+            // }
+        }
+        return combinedHeader;
+    }
+    bool isJoinable(Tuple resultRow, Tuple row) {
+        // for (Tuple)     FIXME
+        return true;
+    }
+    // Tuple joinTuples(Tuple resultRow, Tuple row...) {
+    //     return resultRow;  // FIXME
     // }
+    Relation* naturalJoin(Relation* result) {
+        Header header = combineHeaders(result->getHeader(), header);
+        Relation* relation = new Relation();
+        for (Tuple resultRow : result->getBody()) {
+            for (Tuple row : body) {
+                if (isJoinable(resultRow, row)) {
+                    std::cout << "found a joinable pair" << std::endl;
+                    // joinTuples(resultRow, row, ...);
+                }
+            }
+        }
+        return relation;
+    }
     std::string rowToString(Tuple row) const {
         std::string rowStr = "";
         for (int i = 0; i < header.getSize(); i++) {

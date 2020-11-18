@@ -17,6 +17,9 @@ class Rule {
         headPredicate = headPred;
         predicateList = listOfPredicates;
     }
+    std::vector<Predicate> getPredicateList() const {
+        return predicateList;
+    }
     size_t getSize() const {
         return predicateList.size();
     }

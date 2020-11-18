@@ -13,6 +13,9 @@ class Header {
     Header(std::vector<std::string> n) {
         names = n;
     }
+    void addName(std::string n) {
+        names.push_back(n);
+    }
     int getSize() const {
         return names.size();
     }

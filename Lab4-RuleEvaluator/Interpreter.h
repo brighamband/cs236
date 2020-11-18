@@ -13,6 +13,7 @@ class Interpreter {
    private:
     DatalogProgram datalog;
     Database database;
+    int numPasses = 0;
 
    public:
     Interpreter(DatalogProgram d) {
@@ -57,7 +58,6 @@ class Interpreter {
         }
         return -1;
     }
-    // evalPredicates - first makeRHRelation function that converts Preds to vector of Relations
     Relation* evaluatePredicate(Predicate p) {
         std::string name = p.getName();
         Relation* relation = database.getRelation(name);
@@ -93,24 +93,47 @@ class Interpreter {
         }
         return queriesStr;
     }
+    std::vector<Predicate> getRHRelation(size_t index) {
+        return datalog.getRule(index).getPredicateList();
+    }
     std::string evaluateRule(size_t index) {
         std::string ruleStr = "";
+        std::vector<Predicate> vp = getRHRelation(index);
+        std::vector<Relation*> vr;
+        // FIXME
+        Relation* result = new Relation("test");
+        for (size_t i = 0; i < datalog.getRule(index).getSize(); i++) {
+            Relation* relation = evaluatePredicate(vp.at(i));
+            // if (i == 0) {
+            //     result = relation;
+            // }
+            relation->unionize(*result);
+            //  else {
+            // result = relation->naturalJoin(result);
+            // }
+            // Join the relations that result
+            // Project the columns that appear in the head predicate
+            // Rename the relation to make it union-compatible
+            // Union with the relation in the database
+            vr.push_back(relation);
+        }
+        // if (vr.size() > 0) {
+        //     // join
+
+        //     for (size_t i = 1; i < vr.size(); i++) {
+
+        //     }
+        // }
         ruleStr += toStringRule(index) + "\n";
-        // Evaluate the predicates on the right-hand side of the rule
-        //      // var rh = getRHRelation();
-        //      // rh.evaluatePredicate();
-        // Join the relations that result
-        // Project the columns that appear in the head predicate
-        // Rename the relation to make it union-compatible
-        // Union with the relation in the database
         return ruleStr;
     }
     std::string evaluateRules() {  // MAKE FIXED POINT ALGORITHM
+        numPasses = 0;
         std::string rulesStr = "Rule Evaluation\n";
         for (size_t i = 0; i < datalog.getNumRules(); i++) {
             rulesStr += evaluateRule(i);
+            numPasses++;
         }
-        int numPasses = 2;
         rulesStr += "\n\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
         return rulesStr;
     }
@@ -120,7 +143,7 @@ class Interpreter {
         return interpretStr;
     }
     std::string toStringRule(size_t index) {
-        return datalog.getRule(index).toString();  //+ "? ";
+        return datalog.getRule(index).toString() + ".";
     }
     std::string toStringQuery(size_t index) {
         return datalog.getQuery(index).toString() + "? ";
