@@ -97,42 +97,47 @@ class Interpreter {
         return datalog.getRule(index).getPredicateList();
     }
     std::string evaluateRule(size_t index) {
-        std::string ruleStr = "";
+        std::string ruleStr = toStringRule(index) + "\n";
+        std::string newRelationName = datalog.getRule(index).getHeadPredicateName();
         std::vector<Predicate> vp = getRHRelation(index);
-        std::vector<Relation*> vr;
-        // FIXME
-        Relation* result = new Relation("test");
+        // Join the relations that result
+        Relation* resultRelation = new Relation();
+        Relation* relationToJoin = database.getRelation(newRelationName);
         for (size_t i = 0; i < datalog.getRule(index).getSize(); i++) {
-            Relation* relation = evaluatePredicate(vp.at(i));
-            // if (i == 0) {
-            //     result = relation;
-            // }
-            relation->unionize(*result);
-            //  else {
-            // result = relation->naturalJoin(result);
-            // }
-            // Join the relations that result
-            // Project the columns that appear in the head predicate
-            // Rename the relation to make it union-compatible
-            // Union with the relation in the database
-            vr.push_back(relation);
+            resultRelation = evaluatePredicate(vp.at(i));
+            if (i == 0) {
+                resultRelation = relationToJoin;
+            } else {
+                resultRelation = relationToJoin->naturalJoin(resultRelation, newRelationName);
+            }
         }
-        // if (vr.size() > 0) {
-        //     // join
-
-        //     for (size_t i = 1; i < vr.size(); i++) {
-
-        //     }
-        // }
-        ruleStr += toStringRule(index) + "\n";
+        // Project the columns that appear in the head predicate
+        // resultRelation = resultRelation->project();
+        // Rename the relation to make it union-compatible
+        resultRelation = resultRelation->rename(database.getHeader(newRelationName));
+        // Union with the relation in the database
+        resultRelation->unionize(database.getRelation(newRelationName));
+        // PRINT
+        ruleStr += resultRelation->toString() + "test\n";
         return ruleStr;
     }
-    std::string evaluateRules() {  // MAKE FIXED POINT ALGORITHM
+    std::string evaluateRules() {
         numPasses = 0;
         std::string rulesStr = "Rule Evaluation\n";
-        for (size_t i = 0; i < datalog.getNumRules(); i++) {
-            rulesStr += evaluateRule(i);
-            numPasses++;
+        bool tuplesChanged = true;
+        while (tuplesChanged) {
+            size_t sizeBefore = 0;
+            size_t sizeAfter = 0;
+            for (size_t i = 0; i < datalog.getNumRules(); i++) {
+                std::string relationName = datalog.getRule(i).getHeadPredicateName();
+                sizeBefore = database.getRelationBodySize(relationName);
+                rulesStr += evaluateRule(i);
+                sizeAfter = database.getRelationBodySize(relationName);
+                if (sizeAfter == sizeBefore) {
+                    tuplesChanged = false;
+                }
+                numPasses++;
+            }
         }
         rulesStr += "\n\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
         return rulesStr;

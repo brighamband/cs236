@@ -99,38 +99,61 @@ class Relation {
         }
         return relation;
     }
-    void unionize(Relation& resultRelation) {  // REMOVE THE & IF THERE'S ISSUES
-        std::set<Tuple> resultBody = resultRelation.getBody();
+    void unionize(Relation* resultRelation) {  // REMOVE THE & IF THERE'S ISSUES
+        std::set<Tuple> resultBody = resultRelation->getBody();
         for (Tuple row : resultBody) {
             if (addTuple(row)) {
                 std::cout << rowToString(row);
             }
         }
     }
-    Header combineHeaders(Header resultHeader, Header header) {
+    Header joinHeaders(Header resultHeader, Header headerToJoin, std::vector<int>& vi) {
         Header combinedHeader = resultHeader;
-        for (int i = 0; i < header.getSize(); i++) {
-            // if (header.getName(i) != combinedHeader.getName(i)) {  // FIXME
-            //     combinedHeader.addName(combinedHeader.getName(i));
-            // }
+        bool alreadyExists = true;
+        for (int i = 0; i < headerToJoin.getSize(); i++) {
+            alreadyExists = true;
+            for (int j = 0; j < combinedHeader.getSize(); j++) {
+                if (headerToJoin.getName(i) == combinedHeader.getName(j)) {
+                    alreadyExists = false;
+                    vi.push_back(j);
+                }
+            }
+            if (!alreadyExists) {
+                combinedHeader.addName(headerToJoin.getName(i));
+                vi.push_back(combinedHeader.getSize() - 1);
+            }
         }
         return combinedHeader;
     }
-    bool isJoinable(Tuple resultRow, Tuple row) {
-        // for (Tuple)     FIXME
+    bool isJoinable(Tuple resultRow, Tuple row, std::vector<int> vi) {
+        for (size_t i = 0; i < vi.size(); i++) {
+            if (vi.at(i) < resultRow.getSize()) {
+                if (row.getValue(i) != resultRow.getValue(vi.at(i))) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
-    // Tuple joinTuples(Tuple resultRow, Tuple row...) {
-    //     return resultRow;  // FIXME
-    // }
-    Relation* naturalJoin(Relation* result) {
-        Header header = combineHeaders(result->getHeader(), header);
-        Relation* relation = new Relation();
-        for (Tuple resultRow : result->getBody()) {
+    Tuple joinTuples(Tuple resultRow, Tuple row, std::vector<int> vi) {
+        Tuple combinedTuple = resultRow;
+        for (size_t i = 0; i < vi.size(); i++) {
+            if (vi.at(i) > (resultRow.getSize() - 1)) {
+                resultRow.pushToTuple(row.getValue(vi.at(i)));
+            }
+        }
+        return resultRow;
+    }
+    Relation* naturalJoin(Relation* resultRelation, std::string newName) {
+        std::vector<int> vi;
+        Header newHeader = joinHeaders(resultRelation->getHeader(), header, vi);
+        Relation* relation = new Relation(newName, newHeader);
+        for (Tuple resultRow : resultRelation->getBody()) {
             for (Tuple row : body) {
-                if (isJoinable(resultRow, row)) {
-                    std::cout << "found a joinable pair" << std::endl;
-                    // joinTuples(resultRow, row, ...);
+                if (isJoinable(resultRow, row, vi)) {
+                    // std::cout << "found a joinable pair" << std::endl;
+                    Tuple newTuple = joinTuples(resultRow, row, vi);
+                    relation->addTuple(newTuple);
                 }
             }
         }

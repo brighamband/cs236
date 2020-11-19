@@ -26,6 +26,10 @@ class Database {
         Relation* relPtr = db[name];
         return relPtr->getBody();
     }
+    size_t getRelationBodySize(std::string name) {
+        Relation* relPtr = db[name];
+        return relPtr->getBodySize();
+    }
 };
 
 #endif

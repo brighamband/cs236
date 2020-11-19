@@ -17,6 +17,9 @@ class Rule {
         headPredicate = headPred;
         predicateList = listOfPredicates;
     }
+    string getHeadPredicateName() const {
+        return headPredicate.getName();
+    }
     std::vector<Predicate> getPredicateList() const {
         return predicateList;
     }

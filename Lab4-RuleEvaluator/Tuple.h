@@ -16,6 +16,12 @@ class Tuple {
     bool operator<(const Tuple& other) const {
         return values < other.values;
     }
+    void pushToTuple(std::string s) {
+        values.push_back(s);
+    }
+    int getSize() const {
+        return values.size();
+    }
     std::string getValue(size_t index) const {
         return values.at(index);
     }
