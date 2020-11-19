@@ -108,51 +108,48 @@ class Relation {
         }
     }
     Header joinHeaders(Header resultHeader, Header headerToJoin, std::vector<int>& vi) {
-        Header combinedHeader = resultHeader;
-        bool alreadyExists = true;
+        bool alreadyExists = false;
         for (int i = 0; i < headerToJoin.getSize(); i++) {
-            alreadyExists = true;
-            for (int j = 0; j < combinedHeader.getSize(); j++) {
-                if (headerToJoin.getName(i) == combinedHeader.getName(j)) {
-                    alreadyExists = false;
+            alreadyExists = false;
+            for (int j = 0; j < resultHeader.getSize(); j++) {
+                if (headerToJoin.getName(i) == resultHeader.getName(j)) {
+                    alreadyExists = true;
                     vi.push_back(j);
                 }
             }
             if (!alreadyExists) {
-                combinedHeader.addName(headerToJoin.getName(i));
-                vi.push_back(combinedHeader.getSize() - 1);
+                resultHeader.addName(headerToJoin.getName(i));
+                vi.push_back(resultHeader.getSize() - 1);
             }
         }
-        return combinedHeader;
+        return resultHeader;
     }
-    bool isJoinable(Tuple resultRow, Tuple row, std::vector<int> vi) {
+    bool isJoinable(Tuple resultRow, Tuple rowToJoin, std::vector<int> vi) {
         for (size_t i = 0; i < vi.size(); i++) {
             if (vi.at(i) < resultRow.getSize()) {
-                if (row.getValue(i) != resultRow.getValue(vi.at(i))) {
+                if (resultRow.getValue(vi.at(i)) != rowToJoin.getValue(i)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    Tuple joinTuples(Tuple resultRow, Tuple row, std::vector<int> vi) {
-        Tuple combinedTuple = resultRow;
+    Tuple joinTuples(Tuple resultRow, Tuple rowToJoin, std::vector<int> vi) {
         for (size_t i = 0; i < vi.size(); i++) {
             if (vi.at(i) > (resultRow.getSize() - 1)) {
-                resultRow.pushToTuple(row.getValue(vi.at(i)));
+                resultRow.pushToTuple(rowToJoin.getValue(i));
             }
         }
         return resultRow;
     }
-    Relation* naturalJoin(Relation* resultRelation, std::string newName) {
+    Relation* naturalJoin(Relation* relationToJoin, std::string newName) {
         std::vector<int> vi;
-        Header newHeader = joinHeaders(resultRelation->getHeader(), header, vi);
+        Header newHeader = joinHeaders(header, relationToJoin->getHeader(), vi);
         Relation* relation = new Relation(newName, newHeader);
-        for (Tuple resultRow : resultRelation->getBody()) {
-            for (Tuple row : body) {
-                if (isJoinable(resultRow, row, vi)) {
-                    // std::cout << "found a joinable pair" << std::endl;
-                    Tuple newTuple = joinTuples(resultRow, row, vi);
+        for (Tuple row : body) {
+            for (Tuple joinRow : relationToJoin->getBody()) {
+                if (isJoinable(row, joinRow, vi)) {
+                    Tuple newTuple = joinTuples(row, joinRow, vi);
                     relation->addTuple(newTuple);
                 }
             }

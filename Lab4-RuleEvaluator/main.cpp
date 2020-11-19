@@ -12,7 +12,7 @@
 #include "Lexer.h"
 #include "Parser.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Please provide the name of input file.";
         return 1;
@@ -45,27 +45,33 @@ int main(int argc, char *argv[]) {
     Interpreter interpreter(datalog);
     std::cout << interpreter.interpret();
 
-    // Header header({"S", "N", "A", "P"});
-    // Tuple t1({"12345", "Charlie", "12 Apple St.", "555-1234"});
-    // Tuple t2({"33333", "Snoopy", "12 Apple St.", "555-1234"});
-    // Tuple t3({"67890", "Lucy", "34 Pear Ave.", "555-5678"});
-    // Tuple t4({"12345", "Charlie", "12 Apple St.", "Charlie"});
+    // Header header1({"S", "N", "A", "P"});
+    // Tuple ta1({"12345", "C. Brown", "12 Apple St.", "555-1234"});
+    // Tuple ta2({"22222", "P. Patty", "56 Grape Blvd", "555-9999"});
+    // Tuple ta3({"33333", "Snoopy", "12 Apple St.", "555-1234"});
 
-    // Relation relation("snap", header);
-    // relation.addTuple(t1);
-    // relation.addTuple(t2);
-    // relation.addTuple(t3);
-    // relation.addTuple(t4);
+    // Header header2({"C", "S", "G"});
+    // Tuple tb1({"CS101", "12345", "A"});
+    // Tuple tb2({"CS101", "22222", "B"});
+    // Tuple tb3({"CS101", "33333", "C"});
+    // Tuple tb4({"EE200", "12345", "B+"});
+    // Tuple tb5({"EE200", "22222", "B"});
 
-    // Tuple t5({"12845", "Charlie", "12 Apple St.", "Charlie"});
+    // Relation relation1("snap", header1);
+    // relation1.addTuple(ta1);
+    // relation1.addTuple(ta2);
+    // relation1.addTuple(ta3);
 
-    // Relation relation2("snap2", header);
-    // relation2.addTuple(t1);
-    // relation2.addTuple(t2);
-    // relation2.addTuple(t3);
-    // relation2.addTuple(t5);
+    // Relation* relation2 = new Relation("csg", header2);
+    // relation2->addTuple(tb1);
+    // relation2->addTuple(tb2);
+    // relation2->addTuple(tb3);
+    // relation2->addTuple(tb4);
+    // relation2->addTuple(tb5);
 
-    // relation.unionize(relation2);
+    // Relation* ans = relation1.naturalJoin(relation2, "newname");
+    // cout << ans->toString();
+    // relation1.unionize(relation2);
 
     return 0;
 }

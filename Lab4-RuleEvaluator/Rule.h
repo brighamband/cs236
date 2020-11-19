@@ -17,6 +17,9 @@ class Rule {
         headPredicate = headPred;
         predicateList = listOfPredicates;
     }
+    Predicate getHeadPredicate() const {
+        return headPredicate;
+    }
     string getHeadPredicateName() const {
         return headPredicate.getName();
     }

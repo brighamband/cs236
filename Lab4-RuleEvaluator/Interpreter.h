@@ -98,27 +98,31 @@ class Interpreter {
     }
     std::string evaluateRule(size_t index) {
         std::string ruleStr = toStringRule(index) + "\n";
-        std::string newRelationName = datalog.getRule(index).getHeadPredicateName();
-        std::vector<Predicate> vp = getRHRelation(index);
-        // Join the relations that result
+        Rule rule = datalog.getRule(index);
+        std::string newRelationName = rule.getHeadPredicateName();
+        std::vector<Predicate> rHPredicates = rule.getPredicateList();
+        std::vector<int> projectIndices;
         Relation* resultRelation = new Relation();
-        Relation* relationToJoin = database.getRelation(newRelationName);
-        for (size_t i = 0; i < datalog.getRule(index).getSize(); i++) {
-            resultRelation = evaluatePredicate(vp.at(i));
+
+        for (size_t i = 0; i < rHPredicates.size(); i++) {
             if (i == 0) {
-                resultRelation = relationToJoin;
+                resultRelation = evaluatePredicate(rHPredicates.at(i));
             } else {
-                resultRelation = relationToJoin->naturalJoin(resultRelation, newRelationName);
+                resultRelation = resultRelation->naturalJoin(evaluatePredicate(rHPredicates.at(i)), newRelationName);
             }
         }
-        // Project the columns that appear in the head predicate
-        // resultRelation = resultRelation->project();
-        // Rename the relation to make it union-compatible
+
+        for (size_t i = 0; i < rule.getHeadPredicate().convertParams().size(); i++) {
+            for (int j = 0; j < resultRelation->getHeader().getSize(); j++) {
+                if (rule.getHeadPredicate().getParam(i) == resultRelation->getHeader().getName(j)) {
+                    projectIndices.push_back(j);
+                }
+            }
+        }
+        resultRelation = resultRelation->project(projectIndices);
         resultRelation = resultRelation->rename(database.getHeader(newRelationName));
-        // Union with the relation in the database
         resultRelation->unionize(database.getRelation(newRelationName));
-        // PRINT
-        ruleStr += resultRelation->toString() + "test\n";
+        ruleStr += resultRelation->toString();
         return ruleStr;
     }
     std::string evaluateRules() {
