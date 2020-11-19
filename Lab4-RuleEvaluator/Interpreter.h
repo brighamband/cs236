@@ -121,8 +121,8 @@ class Interpreter {
         }
         resultRelation = resultRelation->project(projectIndices);
         resultRelation = resultRelation->rename(database.getHeader(newRelationName));
-        resultRelation->unionize(database.getRelation(newRelationName));
-        ruleStr += resultRelation->toString();
+        ruleStr += database.getRelation(newRelationName)->unionize(resultRelation);
+        // ruleStr += resultRelation->toString();
         return ruleStr;
     }
     std::string evaluateRules() {
@@ -134,21 +134,22 @@ class Interpreter {
             size_t sizeAfter = 0;
             for (size_t i = 0; i < datalog.getNumRules(); i++) {
                 std::string relationName = datalog.getRule(i).getHeadPredicateName();
-                sizeBefore = database.getRelationBodySize(relationName);
+                sizeBefore += database.getRelationBodySize(relationName);
                 rulesStr += evaluateRule(i);
-                sizeAfter = database.getRelationBodySize(relationName);
-                if (sizeAfter == sizeBefore) {
-                    tuplesChanged = false;
-                }
-                numPasses++;
+                sizeAfter += database.getRelationBodySize(relationName);
             }
+            if (sizeAfter == sizeBefore) {
+                tuplesChanged = false;
+            }
+            numPasses++;
         }
-        rulesStr += "\n\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
+        rulesStr += "\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
         return rulesStr;
     }
     std::string interpret() {
         std::string interpretStr = "";
-        interpretStr += evaluateRules() += evaluateQueries();
+        interpretStr += evaluateRules();
+        interpretStr += evaluateQueries();
         return interpretStr;
     }
     std::string toStringRule(size_t index) {

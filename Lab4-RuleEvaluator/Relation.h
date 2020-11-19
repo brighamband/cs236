@@ -99,13 +99,15 @@ class Relation {
         }
         return relation;
     }
-    void unionize(Relation* resultRelation) {  // REMOVE THE & IF THERE'S ISSUES
+    std::string unionize(Relation* resultRelation) {
+        std::string unionStr = "";
         std::set<Tuple> resultBody = resultRelation->getBody();
         for (Tuple row : resultBody) {
             if (addTuple(row)) {
-                std::cout << rowToString(row);
+                unionStr += rowToString(row);
             }
         }
+        return unionStr;
     }
     Header joinHeaders(Header resultHeader, Header headerToJoin, std::vector<int>& vi) {
         bool alreadyExists = false;
@@ -162,7 +164,7 @@ class Relation {
             if (i > 0) {
                 rowStr += ", ";
             }
-            rowStr += "  " + header.getName(i) + "=" + row.getValue(i);
+            rowStr += " " + header.getName(i) + "=" + row.getValue(i);
         }
         rowStr += "\n";
         return rowStr;

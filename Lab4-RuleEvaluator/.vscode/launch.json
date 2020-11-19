@@ -9,7 +9,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/lab4.exe",
-      "args": ["./project4-exampleIO/in40.txt"],
+      "args": ["./project4-exampleIO/in61.txt"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "externalConsole": false,
