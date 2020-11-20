@@ -20,9 +20,6 @@ class Interpreter {
         datalog = d;
         database = makeDatabase();
     }
-    // ~Interpreter() {
-    //     // DELETE NEW RELATIONS MADE
-    // }
     Relation* processSchemes(size_t index, std::string key) {
         Relation* relation = new Relation(key);
         Header header(datalog.convertSchemeParams(index));
