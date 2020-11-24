@@ -25,9 +25,9 @@ int main(int argc, char* argv[]) {
     }
 
     // get input, add to string
-    std::string line = "";
-    std::string inputString = "";
-    char inputChar = '\0';
+    std::string line;
+    std::string inputString;
+    char inputChar;
 
     while (in.get(inputChar)) {
         inputString += inputChar;
