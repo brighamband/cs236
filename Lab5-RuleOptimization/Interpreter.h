@@ -119,7 +119,6 @@ class Interpreter {
         resultRelation = resultRelation->project(projectIndices);
         resultRelation = resultRelation->rename(database.getHeader(newRelationName));
         ruleStr += database.getRelation(newRelationName)->unionize(resultRelation);
-        // ruleStr += resultRelation->toString();
         return ruleStr;
     }
     std::string evaluateRules() {
