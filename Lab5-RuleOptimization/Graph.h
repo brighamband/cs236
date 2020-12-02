@@ -8,6 +8,9 @@
 
 #include "Node.h"
 
+// Nodes - do you need an id if you have the key int?
+// How do i construct the dependency graph w/o doing dfs?  Do i do that in the interpreter?
+
 class Graph {
    private:
     std::map<int, Node> nodes;
@@ -16,10 +19,18 @@ class Graph {
 
    public:
     Graph() {}
-    void addNode(Node newNode) {
-        nodes.insert(std::make_pair(nodes.size(), newNode));
-        // set Node id equal to key
-        nodes[nodes.size() - 1].setId(nodes.size() - 1);
+    Graph(int numNodes) {
+        for (int i = 0; i < numNodes; i++) {
+            addNode();
+        }
+    }
+    void addNode() {
+        Node newNode;
+        nodes.insert(std::make_pair(nodes.size(), newNode));    // key: id (ascending from 0), value: Node
+        nodes[nodes.size() - 1].setId(nodes.size() - 1);    // set Node id equal to key
+    }
+    void addEdge(int from, int to) {
+        nodes[from].addAdjacentNode(to);
     }
     void dFS(Node n) {}
     // find the post-order
@@ -34,8 +45,6 @@ class Graph {
         //        for (int i = 0; i < ; ++i) {
         //            dFS()
         //        }
-    }
-    void addEdge(int from, int to) {
     }
     std::string toString() {
         std::string graphStr = "Dependency Graph\n";

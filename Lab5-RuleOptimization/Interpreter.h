@@ -8,6 +8,7 @@
 
 #include "Database.h"
 #include "DatalogProgram.h"
+#include "Graph.h"
 
 class Interpreter {
    private:
@@ -122,12 +123,15 @@ class Interpreter {
         return ruleStr;
     }
     std::string evaluateRules() {
+        makeDependencyGraph();
+
         numPasses = 0;
         std::string rulesStr = "Rule Evaluation\n";
         bool tuplesChanged = true;
         while (tuplesChanged) {
             size_t sizeBefore = 0;
             size_t sizeAfter = 0;
+            // ONLY LOOP THROUGH STRONGLY CONNECTED COMPONENTS
             for (size_t i = 0; i < datalog.getNumRules(); i++) {
                 std::string relationName = datalog.getRule(i).getHeadPredicateName();
                 sizeBefore += database.getRelationBodySize(relationName);
@@ -147,6 +151,22 @@ class Interpreter {
         interpretStr += evaluateRules();
         interpretStr += evaluateQueries();
         return interpretStr;
+    }
+    void makeDependencyGraph() {
+        Graph dependencyGraph(datalog.getNumRules());
+
+
+        dependencyGraph.addEdge(0, 1);
+        dependencyGraph.addEdge(0, 2);
+        dependencyGraph.addEdge(2, 0);
+
+        std::cout << dependencyGraph.toString() << std::endl << std::endl;
+//        for rule in rules
+//            // store hP = d
+//            for dependency in rule
+//                for rule in rules   // find edges for current rule (see 129 for loop)
+//                    if dependency matches hP
+//                        add edge
     }
     std::string toStringRule(size_t index) {
         return datalog.getRule(index).toString() + ".";
