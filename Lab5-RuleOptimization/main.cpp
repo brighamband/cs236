@@ -3,10 +3,8 @@
 #include <string>
 
 #include "DatalogProgram.h"
-#include "Graph.h"
 #include "Interpreter.h"
 #include "Lexer.h"
-#include "Node.h"
 #include "Parser.h"
 
 int main(int argc, char* argv[]) {
@@ -41,19 +39,6 @@ int main(int argc, char* argv[]) {
         // run interpreter
         Interpreter interpreter(datalog);
         std::cout << interpreter.interpret();
-
-
-    // GRAPH TESTING - FIXME TODO - Remove include graph.h at top
-//    Graph graph;
-//    Node node(1);
-//    node.addAdjacentNodes();
-//    //    std::cout << node.toString();
-//    graph.addNode(node);
-//    Node node2(2);
-//    node2.addAdjacentNodes();
-//    //    std:cout << std::endl << node2.toString();
-//    graph.addNode(node2);
-//    std::cout << graph.toString();
 
     return 0;
 }

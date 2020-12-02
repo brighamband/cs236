@@ -131,7 +131,7 @@ class Interpreter {
         while (tuplesChanged) {
             size_t sizeBefore = 0;
             size_t sizeAfter = 0;
-            // ONLY LOOP THROUGH STRONGLY CONNECTED COMPONENTS
+            // FIXME - ONLY LOOP THROUGH STRONGLY CONNECTED COMPONENTS
             for (size_t i = 0; i < datalog.getNumRules(); i++) {
                 std::string relationName = datalog.getRule(i).getHeadPredicateName();
                 sizeBefore += database.getRelationBodySize(relationName);
