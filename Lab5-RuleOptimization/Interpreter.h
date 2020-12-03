@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -15,6 +16,8 @@ class Interpreter {
     DatalogProgram datalog;
     Database database;
     int numPasses = 0;
+    Graph forwardGraph;
+    Graph reverseGraph;
 
    public:
     Interpreter(DatalogProgram d) {
@@ -123,7 +126,7 @@ class Interpreter {
         return ruleStr;
     }
     std::string evaluateRules() {
-        std::string rulesStr = makeGraphs();
+        std::string rulesStr = optimizeRules();
 
         numPasses = 0;
         rulesStr += "Rule Evaluation\n";
@@ -152,10 +155,10 @@ class Interpreter {
         interpretStr += evaluateQueries();
         return interpretStr;
     }
-    std::string makeGraphs() {
+    void buildGraphs() {
         // Initialize empty graphs based on size
-        Graph forwardGraph(datalog.getNumRules());
-        Graph reverseGraph(datalog.getNumRules());
+        forwardGraph.addNodes(datalog.getNumRules());
+        reverseGraph.addNodes(datalog.getNumRules());
 
         // Add dependencies
         for (size_t i = 0; i < datalog.getNumRules(); i++) {
@@ -171,6 +174,12 @@ class Interpreter {
                 }
             }
         }
+    }
+    std::string optimizeRules() {
+        buildGraphs();
+        std::stack<int> postorder = reverseGraph.getPostorderDFSForest();
+        std::vector<std::set<int>> sCCs = forwardGraph.findSCCsDFSForest(postorder);
+
         return forwardGraph.toString() + "\n";
     }
     std::string toStringRule(size_t index) {

@@ -8,18 +8,15 @@
 
 #include "Node.h"
 
-// Nodes - do you need an id if you have the key int?
-// How do i construct the dependency graph w/o doing dfs?  Do i do that in the interpreter?
-
 class Graph {
    private:
     std::map<int, Node> nodes;
-    std::stack<int> topologicalSort;
+    std::stack<int> topologicalSort;    // reverse post order (they are added in normal post order, but when you pop them off stack they'll be in reverse post-order.
     std::vector<std::set<int>> sCCs;
 
    public:
     Graph() {}
-    Graph(int numNodes) {
+    void addNodes(int numNodes) {
         for (int i = 0; i < numNodes; i++) {
             addNode();
         }
@@ -32,19 +29,46 @@ class Graph {
     void addEdge(int from, int to) {
         nodes[from].addAdjacentNode(to);
     }
-    void dFS(Node n) {}
-    // find the post-order
-    void dFSForestPostorder() {
-        //        for(auto node: reverse_graph){
-        //            if(node.second.visited == false)
-        //                dfs(node.first);
-        //        }
+    void getPostorderDFS(Node& n) {
+        n.setBeenVisited(true);
+        for (auto adjacentNode : n.getAdjacentNodes()) {
+            if (nodes.at(adjacentNode).getBeenVisited() == false) {
+                getPostorderDFS(nodes.at(adjacentNode));
+            }
+        }
+        topologicalSort.push(n.getId());
     }
-    // find the SCCs - which were visited
-    void dFSForestSCCs() {
-        //        for (int i = 0; i < ; ++i) {
-        //            dFS()
-        //        }
+    // find the post-order - Run DFS-Forest (in regular numeric order) on the reverse dependency graph to get the post-order
+    std::stack<int> getPostorderDFSForest() {
+        for (auto& node: nodes) {
+            if (node.second.getBeenVisited() == false) {
+                getPostorderDFS(node.second);
+            }
+        }
+        return topologicalSort;
+    }
+    // find the SCCs - which were visited - Run DFS-Forest (in reverse post-order) on the forward dependency graph to find the strongly connected components
+    std::set<int> findSCCsDFS(Node& n) {
+        n.setBeenVisited(true);
+        std::set<int> tempSSC;
+        for (auto adjacentNode : n.getAdjacentNodes()) {
+            if (nodes.at(adjacentNode).getBeenVisited() == false) {
+                std::set<int> tempPartialSSC = findSCCsDFS(nodes.at(adjacentNode));
+                tempSSC.insert(tempPartialSSC.begin(), tempPartialSSC.end());
+            }
+        }
+        tempSSC.insert(n.getId());
+        return tempSSC;
+    }
+    std::vector<std::set<int>> findSCCsDFSForest(std::stack<int> postorder) {
+        while (!postorder.empty()) {
+            int startingNode = postorder.top();
+            postorder.pop();
+            if (nodes.at(startingNode).getBeenVisited() == false) {
+                sCCs.push_back(findSCCsDFS(nodes.at(startingNode)));
+            }
+        }
+        return sCCs;
     }
     std::string toString() {
         std::string graphStr = "Dependency Graph\n";
