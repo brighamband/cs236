@@ -18,6 +18,7 @@ class Interpreter {
     int numPasses = 0;
     Graph forwardGraph;
     Graph reverseGraph;
+    std::vector<std::set<int>> sCCs;
 
    public:
     Interpreter(DatalogProgram d) {
@@ -130,6 +131,24 @@ class Interpreter {
 
         numPasses = 0;
         rulesStr += "Rule Evaluation\n";
+
+        for (size_t i = 0; i < sCCs.size(); i++) {
+            rulesStr += "SCC: ";
+            std::set<int> sCC = sCCs.at(i);
+            rulesStr += toStringSSC(sCC) + "\n";
+            // run through fixed point algorithm
+            rulesStr += to_string(numPasses) + " passes: " + toStringSSC(sCC) + "\n";
+        }
+
+
+
+
+        rulesStr += fixedPointAlgorithm();
+        rulesStr += "\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
+        return rulesStr;
+    }
+    std::string fixedPointAlgorithm() {
+        std::string resultsStr;
         bool tuplesChanged = true;
         while (tuplesChanged) {
             size_t sizeBefore = 0;
@@ -138,7 +157,7 @@ class Interpreter {
             for (size_t i = 0; i < datalog.getNumRules(); i++) {
                 std::string relationName = datalog.getRule(i).getHeadPredicateName();
                 sizeBefore += database.getRelationBodySize(relationName);
-                rulesStr += evaluateRule(i);
+                resultsStr += evaluateRule(i);
                 sizeAfter += database.getRelationBodySize(relationName);
             }
             if (sizeAfter == sizeBefore) {
@@ -146,8 +165,7 @@ class Interpreter {
             }
             numPasses++;
         }
-        rulesStr += "\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
-        return rulesStr;
+        return resultsStr;
     }
     std::string interpret() {
         std::string interpretStr = "";
@@ -178,9 +196,19 @@ class Interpreter {
     std::string optimizeRules() {
         buildGraphs();
         std::stack<int> postorder = reverseGraph.getPostorderDFSForest();
-        std::vector<std::set<int>> sCCs = forwardGraph.findSCCsDFSForest(postorder);
+        sCCs = forwardGraph.findSCCsDFSForest(postorder);
 
         return forwardGraph.toString() + "\n";
+    }
+    std::string toStringSSC(std::set<int> sCCToPrint) {
+        std::string sCCStr;
+        for (std::set<int>::iterator iter = sCCToPrint.begin(); iter != sCCToPrint.end(); iter++) {
+            if (iter != sCCToPrint.begin()) {
+                sCCStr += ",";
+            }
+            sCCStr += "R" + to_string(*iter);
+        }
+        return sCCStr;
     }
     std::string toStringRule(size_t index) {
         return datalog.getRule(index).toString() + ".";
