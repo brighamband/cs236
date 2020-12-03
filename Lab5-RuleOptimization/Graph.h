@@ -76,8 +76,8 @@ class Graph {
     }
     std::string toString() {
         std::string graphStr = "Dependency Graph\n";
-        for (auto& [key, value] : nodes) {
-            graphStr += value.toString() + "\n";
+        for (auto& node : nodes) {
+            graphStr += node.second.toString() + "\n";
         }
         return graphStr;
     }
