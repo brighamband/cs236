@@ -123,10 +123,10 @@ class Interpreter {
         return ruleStr;
     }
     std::string evaluateRules() {
-        makeGraphs();
+        std::string rulesStr = makeGraphs();
 
         numPasses = 0;
-        std::string rulesStr = "Rule Evaluation\n";
+        rulesStr += "Rule Evaluation\n";
         bool tuplesChanged = true;
         while (tuplesChanged) {
             size_t sizeBefore = 0;
@@ -152,7 +152,8 @@ class Interpreter {
         interpretStr += evaluateQueries();
         return interpretStr;
     }
-    void makeGraphs() {
+    std::string makeGraphs() {
+        // Initialize empty graphs based on size
         Graph forwardGraph(datalog.getNumRules());
         Graph reverseGraph(datalog.getNumRules());
 
@@ -170,13 +171,7 @@ class Interpreter {
                 }
             }
         }
-
-//        forwardGraph.addEdge(0, 1);
-//        forwardGraph.addEdge(0, 2);
-//        forwardGraph.addEdge(2, 0);
-
-        std::cout << forwardGraph.toString() << std::endl
-                  << std::endl;
+        return forwardGraph.toString() + "\n";
     }
     std::string toStringRule(size_t index) {
         return datalog.getRule(index).toString() + ".";
