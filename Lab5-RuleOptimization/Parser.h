@@ -7,15 +7,14 @@
 #include "DatalogProgram.h"
 #include "Predicate.h"
 #include "Token.h"
-using namespace std;
 
 class Parser {
    private:
-    vector<Token> tokenVctr;
+    std::vector<Token> tokenVctr;
     Token currentToken;
-    string tempPredName;
-    vector<Predicate> tempPredVctr;
-    vector<Parameter> tempParamVctr;
+    std::string tempPredName;
+    std::vector<Predicate> tempPredVctr;
+    std::vector<Parameter> tempParamVctr;
     DatalogProgram datalog;
 
    public:

@@ -123,7 +123,7 @@ class Interpreter {
         return ruleStr;
     }
     std::string evaluateRules() {
-        makeDependencyGraph();
+        makeGraphs();
 
         numPasses = 0;
         std::string rulesStr = "Rule Evaluation\n";
@@ -152,21 +152,31 @@ class Interpreter {
         interpretStr += evaluateQueries();
         return interpretStr;
     }
-    void makeDependencyGraph() {
-        Graph dependencyGraph(datalog.getNumRules());
+    void makeGraphs() {
+        Graph forwardGraph(datalog.getNumRules());
+        Graph reverseGraph(datalog.getNumRules());
 
+        // Add dependencies
+        for (size_t i = 0; i < datalog.getNumRules(); i++) {
+            Rule rule = datalog.getRule(i);
+            std::vector<Predicate> rHPredicates = rule.getPredicateList();
+            for (size_t j = 0; j < rHPredicates.size(); j++) {
+                for (size_t k = 0; k < datalog.getNumRules(); k++) {
+                    Rule compareRule = datalog.getRule(k);
+                    if (rule.getPredicateItemName(j) == compareRule.getHeadPredicateName()) {
+                        forwardGraph.addEdge(i, k);
+                        reverseGraph.addEdge(k, i);
+                    }
+                }
+            }
+        }
 
-        dependencyGraph.addEdge(0, 1);
-        dependencyGraph.addEdge(0, 2);
-        dependencyGraph.addEdge(2, 0);
+//        forwardGraph.addEdge(0, 1);
+//        forwardGraph.addEdge(0, 2);
+//        forwardGraph.addEdge(2, 0);
 
-        std::cout << dependencyGraph.toString() << std::endl << std::endl;
-//        for rule in rules
-//            // store hP = d
-//            for dependency in rule
-//                for rule in rules   // find edges for current rule (see 129 for loop)
-//                    if dependency matches hP
-//                        add edge
+        std::cout << forwardGraph.toString() << std::endl
+                  << std::endl;
     }
     std::string toStringRule(size_t index) {
         return datalog.getRule(index).toString() + ".";

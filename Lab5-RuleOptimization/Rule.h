@@ -26,6 +26,9 @@ class Rule {
     std::vector<Predicate> getPredicateList() const {
         return predicateList;
     }
+    string getPredicateItemName(size_t index) {
+        return predicateList.at(index).getName();
+    }
     size_t getSize() const {
         return predicateList.size();
     }

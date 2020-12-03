@@ -4,18 +4,17 @@
 #include <string>
 
 #include "Automaton.h"
-using namespace std;
 
 class MatcherAutomaton : public Automaton {
    private:
-    string toMatch;
+    std::string toMatch;
 
    public:
-    MatcherAutomaton(tokenType typeOfToken, string stringToMatch)
+    MatcherAutomaton(tokenType typeOfToken, std::string stringToMatch)
         : Automaton(typeOfToken) {
         toMatch = stringToMatch;
     }
-    int read(const string &input) {
+    int read(const std::string &input) {
         bool isMatch = true;
         unsigned int inputRead = 0;
         for (int i = 0; i < (int)toMatch.size() && isMatch; i++) {

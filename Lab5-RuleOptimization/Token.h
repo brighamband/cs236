@@ -2,7 +2,6 @@
 #define TOKEN_H
 
 #include <string>
-using namespace std;
 
 enum tokenType {
     COMMA,
@@ -28,19 +27,19 @@ enum tokenType {
 class Token {
    private:
     tokenType type;
-    string value;
+    std::string value;
     int line;
 
    public:
     Token() {}
-    Token(tokenType typeOfToken, string valueOfToken, int lineOfToken) {
+    Token(tokenType typeOfToken, std::string valueOfToken, int lineOfToken) {
         type = typeOfToken;
         value = valueOfToken;
         line = lineOfToken;
     }
     tokenType getType() { return type; }
-    string getValue() { return value; }
-    string typeToString(tokenType typeOfToken) const {
+    std::string getValue() { return value; }
+    std::string typeToString(tokenType typeOfToken) const {
         switch (typeOfToken) {
             case COMMA:
                 return "COMMA";
@@ -81,7 +80,7 @@ class Token {
         }
         return "ERROR";
     }
-    string toString() const {
+    std::string toString() const {
         return ("(" + typeToString(type) + ",\"" + value + "\"," + to_string(line) + ")");
     }
 };

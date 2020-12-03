@@ -12,16 +12,9 @@ class Node {
 
    public:
     Node() {}
-//    Node(int identifier) {
-//        id = identifier;
-//    }
     void setId(int identifier) {
         id = identifier;
     }
-//    void addAdjacentNodes() {
-//        int nodes[] = {1, 2, 3};
-//        adjacentNodes.insert(nodes, nodes + 3);
-//    }
     void addAdjacentNode(int newNode) {
         adjacentNodes.insert(newNode);
     }

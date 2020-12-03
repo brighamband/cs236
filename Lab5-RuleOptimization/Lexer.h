@@ -10,7 +10,6 @@
 #include "MatcherAutomaton.h"
 #include "StringAutomaton.h"
 #include "Token.h"
-using namespace std;
 
 class Lexer {
    private:
@@ -43,7 +42,7 @@ class Lexer {
             delete machine;
         }
     }
-    vector<Token> run(string input) {
+    vector<Token> run(std::string input) {
         int maxRead = 0;
         int inputRead = 0;
         int maxNewLines = 0;
@@ -96,8 +95,8 @@ class Lexer {
         return tokenVector;
     }
 
-    string toString() const {
-        string tokensString = "";
+    std::string toString() const {
+        std::string tokensString = "";
         for (unsigned int i = 0; i < tokenVector.size(); i++) {
             tokensString += tokenVector.at(i).toString() + "\n";
         };

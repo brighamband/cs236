@@ -4,12 +4,11 @@
 #include <string>
 
 #include "Automaton.h"
-using namespace std;
 
 class StringAutomaton : public Automaton {
    public:
     StringAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
-    int read(const string &input) {
+    int read(const std::string &input) {
         type = STRING;
         newLines = 0;
         unsigned int inputRead = 0;

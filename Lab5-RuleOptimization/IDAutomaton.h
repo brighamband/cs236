@@ -5,12 +5,11 @@
 #include <string>
 
 #include "Automaton.h"
-using namespace std;
 
 class IDAutomaton : public Automaton {
    public:
     IDAutomaton(tokenType typeOfToken) : Automaton(typeOfToken) {}
-    int read(const string &input) {
+    int read(const std::string &input) {
         unsigned int inputRead = 0;
         unsigned int currIndex = 0;
 
