@@ -128,42 +128,42 @@ class Interpreter {
     }
     std::string evaluateRules() {
         std::string rulesStr = optimizeRules();
-
-        numPasses = 0;
         rulesStr += "Rule Evaluation\n";
 
         for (size_t i = 0; i < sCCs.size(); i++) {
             rulesStr += "SCC: ";
             std::set<int> sCC = sCCs.at(i);
             rulesStr += toStringSSC(sCC) + "\n";
-            // run through fixed point algorithm
+            rulesStr += fixedPointAlgorithm(sCC);   // Run each strongly connected component through algorithm
             rulesStr += to_string(numPasses) + " passes: " + toStringSSC(sCC) + "\n";
         }
-
-
-
-
-        rulesStr += fixedPointAlgorithm();
-        rulesStr += "\nSchemes populated after " + to_string(numPasses) + " passes through the Rules.\n\n";
-        return rulesStr;
+        return rulesStr + "\n";
     }
-    std::string fixedPointAlgorithm() {
+    std::string fixedPointAlgorithm(std::set<int> sCC) {
         std::string resultsStr;
         bool tuplesChanged = true;
-        while (tuplesChanged) {
-            size_t sizeBefore = 0;
-            size_t sizeAfter = 0;
-            // FIXME - ONLY LOOP THROUGH STRONGLY CONNECTED COMPONENTS
-            for (size_t i = 0; i < datalog.getNumRules(); i++) {
-                std::string relationName = datalog.getRule(i).getHeadPredicateName();
-                sizeBefore += database.getRelationBodySize(relationName);
-                resultsStr += evaluateRule(i);
-                sizeAfter += database.getRelationBodySize(relationName);
-            }
-            if (sizeAfter == sizeBefore) {
-                tuplesChanged = false;
-            }
+        numPasses = 0;
+
+        if (sCC.size() == 1 && !forwardGraph.isMapNodeSelfDependent(*sCC.begin())) {
+            resultsStr += evaluateRule(*sCC.begin());
             numPasses++;
+        }
+        else {
+
+            while (tuplesChanged) {
+                size_t sizeBefore = 0;
+                size_t sizeAfter = 0;
+                for (std::set<int>::iterator iter = sCC.begin(); iter != sCC.end(); iter++) {
+                    std::string relationName = datalog.getRule(*iter).getHeadPredicateName();
+                    sizeBefore += database.getRelationBodySize(relationName);
+                    resultsStr += evaluateRule(*iter);
+                    sizeAfter += database.getRelationBodySize(relationName);
+                }
+                if (sizeAfter == sizeBefore) {
+                    tuplesChanged = false;
+                }
+                numPasses++;
+            }
         }
         return resultsStr;
     }
@@ -197,7 +197,6 @@ class Interpreter {
         buildGraphs();
         std::stack<int> postorder = reverseGraph.getPostorderDFSForest();
         sCCs = forwardGraph.findSCCsDFSForest(postorder);
-
         return forwardGraph.toString() + "\n";
     }
     std::string toStringSSC(std::set<int> sCCToPrint) {

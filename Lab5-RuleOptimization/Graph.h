@@ -11,7 +11,7 @@
 class Graph {
    private:
     std::map<int, Node> nodes;
-    std::stack<int> topologicalSort;    // reverse post order (they are added in normal post order, but when you pop them off stack they'll be in reverse post-order.
+    std::stack<int> topologicalSort;
     std::vector<std::set<int>> sCCs;
 
    public:
@@ -26,6 +26,9 @@ class Graph {
         nodes.insert(std::make_pair(nodes.size(), newNode));    // key: id (ascending from 0), value: Node
         nodes[nodes.size() - 1].setId(nodes.size() - 1);    // set Node id equal to key
     }
+    bool isMapNodeSelfDependent(int nodeId) {
+        return nodes[nodeId].getIsSelfDependent();
+    }
     void addEdge(int from, int to) {
         nodes[from].addAdjacentNode(to);
     }
@@ -38,7 +41,6 @@ class Graph {
         }
         topologicalSort.push(n.getId());
     }
-    // find the post-order - Run DFS-Forest (in regular numeric order) on the reverse dependency graph to get the post-order
     std::stack<int> getPostorderDFSForest() {
         for (auto& node: nodes) {
             if (node.second.getBeenVisited() == false) {
@@ -47,7 +49,6 @@ class Graph {
         }
         return topologicalSort;
     }
-    // find the SCCs - which were visited - Run DFS-Forest (in reverse post-order) on the forward dependency graph to find the strongly connected components
     std::set<int> findSCCsDFS(Node& n) {
         n.setBeenVisited(true);
         std::set<int> tempSSC;
@@ -55,6 +56,9 @@ class Graph {
             if (nodes.at(adjacentNode).getBeenVisited() == false) {
                 std::set<int> tempPartialSSC = findSCCsDFS(nodes.at(adjacentNode));
                 tempSSC.insert(tempPartialSSC.begin(), tempPartialSSC.end());
+            }
+            if (nodes.at(adjacentNode).getId() == n.getId()) {
+                n.setIsSelfDependent(true);
             }
         }
         tempSSC.insert(n.getId());
@@ -73,7 +77,6 @@ class Graph {
     std::string toString() {
         std::string graphStr = "Dependency Graph\n";
         for (auto& [key, value] : nodes) {
-//            graphStr += "key:" + to_string(key) + "\n";
             graphStr += value.toString() + "\n";
         }
         return graphStr;

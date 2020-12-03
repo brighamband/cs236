@@ -30,6 +30,12 @@ class Node {
     bool getBeenVisited() const {
         return beenVisited;
     }
+    void setIsSelfDependent(bool b) {
+        isSelfDependent = b;
+    }
+    bool getIsSelfDependent() const {
+        return isSelfDependent;
+    }
     std::string toString() {
         std::string nodeStr = "R" + to_string(id) + ":";
         for (std::set<int>::iterator iter = adjacentNodes.begin(); iter != adjacentNodes.end(); iter++) {
